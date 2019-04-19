@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+# OS
+*.suo
+*.cache
+Thumbs.db
+*.DS_Store

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dash Camera</title>
+
+    <!-- APPLE SETTINGS-->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!--You need this although you do not need a physical reference as build will inject it in-->
+    <script type="text/javascript" src="cordova.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+    <link rel="stylesheet" href="css/custom.css" />
+</head>
+
+<body>
+    <!-- Camera Page -->
+    <div data-role="page" id="camera" data-title="Camera" data-theme="b">
+        <div data-role="header">
+            <h3>Camera</h3>
+        </div>
+        <div data-role="content">
+            <button id="addPOI">Add POI</button>
+        </div>
+    </div>
+
+    <!-- Maps Page -->
+    <div data-role="page" id="maps" data-title="Maps" data-theme="b">
+            <div id="map"></div>
+    </div>
+
+    <!-- Files Page -->
+    <div data-role="page" id="files" data-title="Files" data-theme="b">
+        <div data-role="header">
+            <h3>Files</h3>
+        </div>
+        <div data-role="content">
+            <ul data-role="listview" id="files_list"></ul>
+        </div>
+    </div>
+
+    <!-- File Viewer Page -->
+    <div data-role="page" id="fileview" data-theme="b">
+        <div data-role="header">
+            <h3>File View</h3>
+        </div>
+    </div> 
+
+    <!-- Footer Navigation -->
+    <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="b">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#camera" data-icon="video" data-transition="fade">Camera</a></li>
+				<li><a href="#maps" data-icon="location" data-transition="fade">Maps</a></li>
+				<li><a href="#files" data-icon="bullets" data-transition="fade">Files</a></li>
+				<li><a href="#" data-icon="gear" data-transition="fade">Settings</a></li>
+			</ul>
+		</div>
+	</div>
+
+    <!-- SCRIPTS -->
+    <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="js/jqm_defaults.js"></script>
+    <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1jaA52jylkWFKKG7j-W03wtp-rh9i20Y" async defer></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>
