@@ -1,9 +1,13 @@
 "use strict";
 
 //TODO:
+//Implement Local Storage for videos & check for deletion
+//Then, need to passing videos and playing them
+
 //Change POI icons and decide on animation?
 //offline screen
 //gesture tutorial
+//Move global vars to top
 
 document.addEventListener('deviceready', function () {
     console.log('PhoneGap Ready!');
@@ -34,6 +38,8 @@ function initNav() {
 var mediaFiles = [];
 $(document).on('pageinit', '#camera', function() {
 
+    mediaFiles = readVideoLocalStorage();
+
     $('#addPOI').click(function() {
         console.log('geo button pressed');
 
@@ -52,13 +58,6 @@ $(document).on('pageinit', '#camera', function() {
             console.log('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
         }
     });
-
-
-    //-----------------
-    //Read in videos from local storage
-    //if (localStorage && localStorage.getItem('Videos')) {
-    //    mediaFiles = JSON.parse(localStorage.getItem("Videos"));
-    //}
 
     $('#startRecording').click(function(event) {
 
@@ -79,6 +78,8 @@ $(document).on('pageinit', '#camera', function() {
                 }
                 mediaFiles.push(video);
             }
+
+            updateVideoLocalStorage(mediaFiles);
         }
 
         function captureFailure(error) {
@@ -97,16 +98,41 @@ $(document).on('pageinit', '#camera', function() {
                     break;
             }
         }
-
-        function updateVideoLocalStorage(videoArray) {
-            if (localStorage) {
-                localStorage.setItem("Videos", JSON.stringify(videoInfo));
-            }
-        }
     });
 
+    function readVideoLocalStorage() {
+        var videoArray = [];
+
+        if (localStorage && localStorage.getItem('Videos')) {
+            videoArray = JSON.parse(localStorage.getItem("Videos"));
+
+            // if (window.cordova) {}
+            //Check if file exists, remove from array if not
+            // for (var i = 0; i < videoArray.length; i++) {
+            //     window.resolveLocalFileSystemURL(videoArray[i].fullPath,
+            //         function () {
+            //             console.log('video exists');
+            //         },
+            //         function () {
+            //             console.log('video was deleted');
+            //             videoArray.splice(i, 1);
+            //         }
+            //     );
+            // }
+        }
+
+        return videoArray;
+    }
+
+    function updateVideoLocalStorage(videoArray) {
+        if (localStorage) {
+            localStorage.setItem("Videos", JSON.stringify(videoArray));
+        }
+    }
+
     $('#testVideoJSON').click(function() {
-        localStorage.setItem("Videos", '[{"name":"VID_20190420_135427.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}, {"name":"VID_20190420_135428.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}, {"name":"VID_20190420_135429.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}]');
+        updateVideoLocalStorage(mediaFiles);
+        //localStorage.setItem("Videos", '[{"name":"VID_20190420_135427.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}, {"name":"VID_20190420_135428.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}, {"name":"VID_20190420_135429.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}]');
     });
 });
 
@@ -240,7 +266,25 @@ $(document).on("pageshow", "#maps", function() {
     function locationSuccess(position) {
         console.log('watching', position.coords.latitude, position.coords.longitude);
         var newLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        currentLocation.setPosition(newLocation);
+        //check to see if current position is known and update
+        if (currentLocation) {
+            currentLocation.setPosition(newLocation);
+        } else {
+            //otherwise, create new marker on current position
+            var icon = {
+                url: "assets/icons/curr_location.png",
+                scaledSize: new google.maps.Size(15, 15), 
+                origin: new google.maps.Point(0, 0), 
+                anchor: new google.maps.Point(7.5, 7.5) 
+            };
+
+            currentLocation = new google.maps.Marker({
+                position: newLocation,
+                map: map,
+                icon: icon
+            });
+        }
+        
     }
 
     function locationFailure(error) {
@@ -276,7 +320,6 @@ $(document).on('pagebeforeshow', '#files', function() {
         //var videoArray = JSON.parse(localStorage.getItem("Videos"));
     }
 
-    //mediaFiles = JSON.parse(localStorage.getItem("Videos"));
     var content = '';
 
     for (var i = 0; i < mediaFiles.length; i++) {
@@ -287,11 +330,15 @@ $(document).on('pagebeforeshow', '#files', function() {
         var filetype = mediaFiles[i].type;
 
         console.log(name, filepath, date, filesize, filetype);
+        
+        //Convert to Megabytes
+        filesize = (filesize / 1000000).toFixed(2);
 
         content +=  '<li>' + 
                         '<a href="#fileview">' +
                             '<h2>' + name + '</h2>' +
                             '<p>' + date + '</p>' +
+                            '<p>' + filesize + ' MB</p>' +
                         '</a>' +
                         '<a href="#">Delete Video</a>' +
                     '</li>';
