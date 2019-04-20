@@ -4,7 +4,6 @@
 //Change POI icons and decide on animation?
 //offline screen
 //gesture tutorial
-//test on iOS
 
 document.addEventListener('deviceready', function () {
     console.log('PhoneGap Ready!');
@@ -17,27 +16,27 @@ document.addEventListener('deviceready', function () {
 
     //Can send sms using sms://00000000&body=message - may need investigation for android
 
-    init();
-
-    initCamera();
+    initNav();
 }, false);
 
 $(document).ready(function () {
     console.log("Browser Ready!");
 
-    init();
-
-    initCamera();
+    initNav();
 });
 
-function init() {
+function initNav() {
     //Initialise navbar
     $("[data-role='navbar']").navbar();
     $("[data-role='header'], [data-role='footer']" ).toolbar();
 }
 
-function initCamera() {
+var mediaFiles = [];
+$(document).on('pageinit', '#camera', function() {
+
     $('#addPOI').click(function() {
+        console.log('geo button pressed');
+
         navigator.geolocation.getCurrentPosition(locationSuccess, locationFailure, {
             enableHighAccuracy: true,
             maximumAge: 5000
@@ -53,7 +52,63 @@ function initCamera() {
             console.log('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
         }
     });
-}
+
+
+    //-----------------
+    //Read in videos from local storage
+    //if (localStorage && localStorage.getItem('Videos')) {
+    //    mediaFiles = JSON.parse(localStorage.getItem("Videos"));
+    //}
+
+    $('#startRecording').click(function(event) {
+
+        console.log('record clicked');
+
+        navigator.device.capture.captureVideo(captureSuccess, captureFailure, {limit: 1});
+
+        function captureSuccess(videoData) {
+            var len = videoData.length;
+
+            for (var i = 0; i < len; i++) {
+                var video = {
+                    name: videoData[i].name,
+                    fullPath: videoData[i].fullPath,
+                    lastModifiedDate: videoData[i].lastModifiedDate,
+                    size: videoData[i].size,
+                    type: videoData[i].type
+                }
+                mediaFiles.push(video);
+            }
+        }
+
+        function captureFailure(error) {
+            switch (error.code) {
+                case CaptureError.CAPTURE_NO_MEDIA_FILES:
+                    console.log("No videos taken");
+                    break;
+                case CaptureError.CAPTURE_PERMISSION_DENIED:
+                    console.log("Permission Denied");
+                    break;
+                case CaptureError.CAPTURE_NOT_SUPPORTED:
+                    console.log("Camera not supported");
+                    break;
+                default:
+                    console.log("Internal Error");
+                    break;
+            }
+        }
+
+        function updateVideoLocalStorage(videoArray) {
+            if (localStorage) {
+                localStorage.setItem("Videos", JSON.stringify(videoInfo));
+            }
+        }
+    });
+
+    $('#testVideoJSON').click(function() {
+        localStorage.setItem("Videos", '[{"name":"VID_20190420_135427.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}, {"name":"VID_20190420_135428.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}, {"name":"VID_20190420_135429.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}]');
+    });
+});
 
 //Global variable holding GMaps marker objects
 var markers = [];
@@ -119,7 +174,7 @@ $(document).on('pageinit', '#maps', function() {
     });
 });
 
-function updateLocalStorage(markerArray) {
+function updateMarkerLocalStorage(markerArray) {
     if (localStorage) {
         var markerInfo = [];
         $.each(markerArray, function() {
@@ -154,11 +209,11 @@ function addMarker (latitude, longitude, map) {
                     break;
                 }
             }
-            updateLocalStorage(markers);
+            updateMarkerLocalStorage(markers);
         });
     
         markers.push(marker);
-        updateLocalStorage(markers);
+        updateMarkerLocalStorage(markers);
 
     } else {
         //create a marker at position that's not assigned to a map
@@ -168,7 +223,7 @@ function addMarker (latitude, longitude, map) {
         });
         //Add to array so that it can be assigned to map during local storage initialisation
         markers.push(shallowMarker);
-        updateLocalStorage(markers);
+        updateMarkerLocalStorage(markers);
         //Remove marker to avoid duplicates
         markers.pop();
     }
@@ -214,9 +269,43 @@ $(document).on("pagecontainerchange", function () {
     });
 });
 
-$(document).on('pagecreate', '#files', function() {
+$(document).on('pagebeforeshow', '#files', function() {
+    console.log('before files shown');
+
+    if (localStorage && localStorage.getItem('Videos')) {
+        //var videoArray = JSON.parse(localStorage.getItem("Videos"));
+    }
+
+    //mediaFiles = JSON.parse(localStorage.getItem("Videos"));
+    var content = '';
+
+    for (var i = 0; i < mediaFiles.length; i++) {
+        var name = mediaFiles[i].name;
+        var date = new Date(mediaFiles[i].lastModifiedDate);
+        var filepath = mediaFiles[i].fullPath;
+        var filesize = mediaFiles[i].size;
+        var filetype = mediaFiles[i].type;
+
+        console.log(name, filepath, date, filesize, filetype);
+
+        content +=  '<li>' + 
+                        '<a href="#fileview">' +
+                            '<h2>' + name + '</h2>' +
+                            '<p>' + date + '</p>' +
+                        '</a>' +
+                        '<a href="#">Delete Video</a>' +
+                    '</li>';
+
+        console.log(content);
+    }
+    
+    $('#files_list').empty();
+    $('#files_list').html(content);
+    $('#files_list').listview('refresh');
 
     $("#files_list li a").on('click', function() {
         console.log('clicked File');
+
+        //update list here and on page load
     })
 });

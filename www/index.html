@@ -25,6 +25,9 @@
         </div>
         <div data-role="content">
             <button id="addPOI">Add POI</button>
+            <button id="startRecording">Start Recording</button>
+
+            <button id="testVideoJSON">TEST VIDEO JSON</button>
         </div>
     </div>
 
@@ -35,19 +38,21 @@
 
     <!-- Files Page -->
     <div data-role="page" id="files" data-title="Files" data-theme="b">
-        <div data-role="header">
-            <h3>Files</h3>
-        </div>
-        <div data-role="content">
-            <ul data-role="listview" id="files_list"></ul>
+        <div data-role="content">            
+            <ul data-role="listview" id="files_list" data-split-icon="delete" data-split-theme="b">
+            </ul>
         </div>
     </div>
 
     <!-- File Viewer Page -->
     <div data-role="page" id="fileview" data-theme="b">
         <div data-role="header">
-            <h3>File View</h3>
+            <h3>File Viewer</h3>
         </div>
+        <div data-role="content">
+            <video></video>
+        </div>
+        
     </div> 
 
     <!-- Footer Navigation -->

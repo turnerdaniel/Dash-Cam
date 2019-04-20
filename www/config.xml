@@ -6,7 +6,7 @@
     version     = "1.0.0" >
     
     <!-- versionCode is optional and Android only -->
-    <name>Dash Camera</name>
+    <name>Dash Cam!</name>
     <description>
         This is an application that allows a mobile phone to be used as a dash camera.
     </description> 
@@ -49,21 +49,34 @@
 	
     <!-- Core plugins -->
     <!--<plugin name="cordova-plugin-camera" />-->
-    <!--<plugin name="cordova-plugin-media-capture" />-->
+    <plugin name="cordova-plugin-media-capture" />
     <plugin name="cordova-plugin-console" />
     <plugin name="cordova-plugin-device" />
     <plugin name="cordova-plugin-device-orientation" />
     <plugin name="cordova-plugin-dialogs" />
 	<plugin name="cordova-plugin-vibration" />
     <plugin name="cordova-plugin-geolocation" />
-    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-        <string>We need access to your location to find you on the map.</string>
-    </edit-config>
     <plugin name="cordova-plugin-inappbrowser" />
     <!--<plugin name="cordova-plugin-media" />-->
     <plugin name="cordova-plugin-network-information" />
     <!-- <plugin name="cordova-plugin-splashscreen" />-->
-	
+
+    <!-- Platform Manifest Changes -->
+    <!-- Media Capture-->
+	<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+        <string>We need camera access to take videos of events infront of the device.</string>
+    </edit-config>
+    <edit-config target="NSMicrophoneUsageDescription" file="*-Info.plist" mode="merge">
+        <string>We need microphone access to record sounds in the videos.</string>
+    </edit-config>
+    <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+        <string>We need to photo library access to save your videos there.</string>
+    </edit-config>
+    <!-- Geolocation -->
+    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+        <string>We need access to your location to find you on the map.</string>
+    </edit-config>
+
     <!-- Third party plugins -->
     <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
     
