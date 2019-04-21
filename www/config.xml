@@ -57,7 +57,7 @@
 	<plugin name="cordova-plugin-vibration" />
     <plugin name="cordova-plugin-geolocation" />
     <plugin name="cordova-plugin-inappbrowser" />
-    <!--<plugin name="cordova-plugin-media" />-->
+    <plugin name="cordova-plugin-file" /> <!--File Resolve -->
     <plugin name="cordova-plugin-network-information" />
     <!-- <plugin name="cordova-plugin-splashscreen" />-->
 

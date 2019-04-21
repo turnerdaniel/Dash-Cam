@@ -2,7 +2,8 @@
 
 //TODO:
 //Implement Local Storage for videos & check for deletion
-//Then, need to passing videos and playing them
+//Then, need to pass videos and play them
+//use classes to get button press
 
 //Change POI icons and decide on animation?
 //offline screen
@@ -76,6 +77,8 @@ $(document).on('pageinit', '#camera', function() {
                     size: videoData[i].size,
                     type: videoData[i].type
                 }
+                alert(video.fullPath);
+                alert(video.type);
                 mediaFiles.push(video);
             }
 
@@ -106,28 +109,50 @@ $(document).on('pageinit', '#camera', function() {
         if (localStorage && localStorage.getItem('Videos')) {
             videoArray = JSON.parse(localStorage.getItem("Videos"));
 
-            // if (window.cordova) {}
-            //Check if file exists, remove from array if not
-            // for (var i = 0; i < videoArray.length; i++) {
-            //     window.resolveLocalFileSystemURL(videoArray[i].fullPath,
-            //         function () {
-            //             console.log('video exists');
-            //         },
-            //         function () {
-            //             console.log('video was deleted');
-            //             videoArray.splice(i, 1);
-            //         }
-            //     );
-            // }
+            if (window.cordova) {
+                //console.log('Cordova Device');
+                //Check if file exists, remove from array if not
+
+                // for (var i = videoArray.length - 1; i >= 0; i--) {
+                //     window.resolveLocalFileSystemURL(videoArray[i].fullPath,
+                //         function (entry) {
+                //             alert("resolved to" + entry.toURL());                            
+                //             console.log('video exists');
+                //         },
+                //         function () {
+                //             console.log('video was deleted');
+                //             videoArray.splice(i, 1);
+                //         }
+                //     );
+                // }
+
+                // for (var i = videoArray.length - 1; i >= 0; i--) {
+                //     (function (i) {
+
+                //         var path;
+                //         if (device.platform == "iOS") {
+                //             path = "file://" + videoArray[i].fullPath.slice(9)
+                //         } else {
+                //             path = videoArray[i].fullPath;
+                //         }
+                //         alert(path);
+
+                //         window.resolveLocalFileSystemURL(path,
+                //             function (entry) {
+                //                 alert("resolved to" + entry.toURL());                            
+                //                 console.log('video exists' + i);
+                //             },
+                //             function () {
+                //                 console.log('video was deleted' + i);
+                //                 videoArray.splice(i, 1);
+                //             });
+                //     })(i);
+                // }
+
+            }
         }
 
         return videoArray;
-    }
-
-    function updateVideoLocalStorage(videoArray) {
-        if (localStorage) {
-            localStorage.setItem("Videos", JSON.stringify(videoArray));
-        }
     }
 
     $('#testVideoJSON').click(function() {
@@ -135,6 +160,12 @@ $(document).on('pageinit', '#camera', function() {
         //localStorage.setItem("Videos", '[{"name":"VID_20190420_135427.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}, {"name":"VID_20190420_135428.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}, {"name":"VID_20190420_135429.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}]');
     });
 });
+
+function updateVideoLocalStorage(videoArray) {
+    if (localStorage && videoArray) {
+        localStorage.setItem("Videos", JSON.stringify(videoArray));
+    }
+}
 
 //Global variable holding GMaps marker objects
 var markers = [];
@@ -317,42 +348,81 @@ $(document).on('pagebeforeshow', '#files', function() {
     console.log('before files shown');
 
     if (localStorage && localStorage.getItem('Videos')) {
-        //var videoArray = JSON.parse(localStorage.getItem("Videos"));
+        var mediaFiles = JSON.parse(localStorage.getItem("Videos"));
     }
 
     var content = '';
+    if (mediaFiles) {
+        for (var i = 0; i < mediaFiles.length; i++) {
+            var name = mediaFiles[i].name;
+            var date = new Date(mediaFiles[i].lastModifiedDate);
+            var filepath = mediaFiles[i].fullPath;
+            var filesize = mediaFiles[i].size;
+            var filetype = mediaFiles[i].type;
 
-    for (var i = 0; i < mediaFiles.length; i++) {
-        var name = mediaFiles[i].name;
-        var date = new Date(mediaFiles[i].lastModifiedDate);
-        var filepath = mediaFiles[i].fullPath;
-        var filesize = mediaFiles[i].size;
-        var filetype = mediaFiles[i].type;
+            console.log(name, filepath, date, filesize, filetype);
 
-        console.log(name, filepath, date, filesize, filetype);
-        
-        //Convert to Megabytes
-        filesize = (filesize / 1000000).toFixed(2);
+            //Convert to Megabytes
+            filesize = (filesize / 1000000).toFixed(2);
 
-        content +=  '<li>' + 
-                        '<a href="#fileview">' +
-                            '<h2>' + name + '</h2>' +
-                            '<p>' + date + '</p>' +
-                            '<p>' + filesize + ' MB</p>' +
-                        '</a>' +
-                        '<a href="#">Delete Video</a>' +
-                    '</li>';
+            content += '<li>' +
+                '<a href="#fileview" class="play-video" data-name="' + name + '" data-filepath="' + filepath + '">' +
+                '<h2>' + name + '</h2>' +
+                '<p>' + date + '</p>' +
+                '<p>' + filesize + ' MB</p>' +
+                '</a>' +
+                '<a href="#" class="delete-video" data-name="' + name + '">Delete Video</a>' +
+                '</li>';
 
-        console.log(content);
+            console.log(content);
+        }
+
+
+        $('#files_list').empty();
+        $('#files_list').html(content);
+        $('#files_list').listview('refresh');
+
+        $("#files_list li .play-video").on('click', function () {
+            console.log('clicked File');
+
+            var name = $(this).data("name");
+            var filepath = $(this).data("filepath");
+
+            sessionStorage.setItem("Name", name.toString());
+            sessionStorage.setItem("Filepath", filepath.toString());
+
+        });
+
+        $("#files_list li .delete-video").on('click', function () {
+            console.log('Clicked Delete');
+
+            var name = $(this).data("name");
+            $(this).parent().remove();
+
+            removeMediaFile(name);
+        });
     }
-    
-    $('#files_list').empty();
-    $('#files_list').html(content);
-    $('#files_list').listview('refresh');
+});
 
-    $("#files_list li a").on('click', function() {
-        console.log('clicked File');
+//may need to change to filepath
+function removeMediaFile(filename) {
+    for (var i = 0; i < mediaFiles.length; i++) {
+        if (mediaFiles[i].name == filename) {
+            mediaFiles.splice(i, 1);
+            break;
+        }
+    }
+    updateVideoLocalStorage(mediaFiles);
+}
 
-        //update list here and on page load
-    })
+$(document).on('pagebeforeshow', '#fileview',function() {
+
+    var name = sessionStorage.getItem("Name");
+    var filepath = sessionStorage.getItem("Filepath");
+
+    $('#header-title').text(name);
+    $('video').attr({"src": filepath, 
+                    "type": "video/mp4",
+                    "width": "100%",
+                    "height": "100%"});
 });

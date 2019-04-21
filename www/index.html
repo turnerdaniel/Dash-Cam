@@ -47,10 +47,16 @@
     <!-- File Viewer Page -->
     <div data-role="page" id="fileview" data-theme="b">
         <div data-role="header">
-            <h3>File Viewer</h3>
+            <div class="ui-btn-left">
+                    <a href="#files" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-delete"></a>
+            </div>
+            <h3 id="header-title">File Viewer</h3>
+            <div class="ui-btn-right">
+                    <a href="#" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-camera"></a>
+            </div>
         </div>
         <div data-role="content">
-            <video></video>
+            <video width="320" height="240" controls></video>
         </div>
         
     </div> 
