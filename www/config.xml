@@ -78,13 +78,7 @@
     </edit-config>
 
     <!-- Third party plugins -->
-    <!-- A list of available plugins are available at https://build.phonegap.com/plugins -->
-    
-    <!--#############################################################################################-->
-    <!-- <plugin name="cordova-plugin-googlemaps">
-        <variable name="API_KEY_FOR_ANDROID" value="AIzaSyA1jaA52jylkWFKKG7j-W03wtp-rh9i20Y" />
-        <variable name="API_KEY_FOR_IOS" value="AIzaSyA1jaA52jylkWFKKG7j-W03wtp-rh9i20Y" />
-    </plugin> -->
+    <plugin name="cordova-plugin-android-permissions" spec="1" source="npm" />
  
 	<!--these are generic not good enough for a live build - you will need to be os and device specific (android can use 9 slice png)-->
 	<icon src="icon.png" />

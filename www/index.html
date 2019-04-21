@@ -8,6 +8,7 @@
     <!-- APPLE SETTINGS-->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
 
     <!--You need this although you do not need a physical reference as build will inject it in-->
     <script type="text/javascript" src="cordova.js"></script>
@@ -20,9 +21,6 @@
 <body>
     <!-- Camera Page -->
     <div data-role="page" id="camera" data-title="Camera" data-theme="b">
-        <div data-role="header">
-            <h3>Camera</h3>
-        </div>
         <div data-role="content">
             <button id="addPOI">Add POI</button>
             <button id="startRecording">Start Recording</button>
@@ -44,9 +42,9 @@
         </div>
     </div>
 
-    <!-- File Viewer Page -->
-    <div data-role="page" id="fileview" data-theme="b">
-        <div data-role="header">
+    <!-- File View Page -->
+    <div data-role="page" id="fileview" data-title="File View" data-theme="b">
+        <div data-role="header" id="fileview-header">
             <div class="ui-btn-left">
                     <a href="#files" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-delete"></a>
             </div>
@@ -55,11 +53,46 @@
                     <a href="#" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-camera"></a>
             </div>
         </div>
-        <div data-role="content">
-            <video width="320" height="240" controls></video>
+        <div data-role="content" class="no-padding">
+            <video id="video" type="video/mp4" controls></video>
         </div>
-        
     </div> 
+
+    <!-- Info Page -->
+    <div data-role="page" id="info" data-title="Info" data-theme="b">
+            <div data-role="content">
+                <h1>Post-Accident Checklist</h1>
+                <p>In case of an accident, give us the number of a person you would like to notify by text:</p>
+                <input type="tel" data-clear-btn="true" name="emergency-tel" id="emergency-tel" placeholder="Emergency Contact Number">
+
+                <ul>
+                    <li>Stop the car and turn off your engine.</li>
+                    <li>Turn on your hazard lights to warn other drivers.</li>
+                    <li>Check for injuries to yourself and passengers.</li>
+                    <li>Attempt to stay calm - it's normal to be shaken after an accident.</li>
+                </ul>
+                <h3>Call Emergency Services If:</h3>
+                <ul>
+                    <li>Anyone is injured.</li>
+                    <li>The other driver leaves the scene without providing insurance details.</li>
+                    <li>You think the other driver has no insurance or is under the influence of drink or drugs.</li>
+                    <li>The road is blocked.</li>
+                </ul>
+                <h3>What Do I Need to do?</h3>
+                <ul>
+                    <li>Share your name and address with everyone involved in the accident.</li>
+                    <li>Swap insurance details with the other drivers.</li>
+                    <li>Get the contact information of any witnesses.</li>
+                </ul>
+                <h3>What Information do I Collect?:</h3>
+                <ul>
+                    <li>Make, model, colour and number plate of all vehicles involved.</li>
+                    <li>Time and date of the crash.</li>
+                    <li>The driving conditions.</li>
+                    <li>Damage caused - take photos as evidence.</li>
+                </ul>
+            </div>
+    </div>
 
     <!-- Footer Navigation -->
     <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="b">
@@ -68,7 +101,7 @@
 				<li><a href="#camera" data-icon="video" data-transition="fade">Camera</a></li>
 				<li><a href="#maps" data-icon="location" data-transition="fade">Maps</a></li>
 				<li><a href="#files" data-icon="bullets" data-transition="fade">Files</a></li>
-				<li><a href="#" data-icon="gear" data-transition="fade">Settings</a></li>
+				<li><a href="#info" data-icon="gear" data-transition="fade">Info</a></li>
 			</ul>
 		</div>
 	</div>

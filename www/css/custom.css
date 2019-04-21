@@ -1,3 +1,5 @@
+
+
 /* --- Camera Page --- */
 
 /* --- Map Page --- */
@@ -7,3 +9,16 @@
 }
 
 /* --- Navigation Bar --- */
+
+
+/* --- File Viewer --- */
+#video {
+    height: 100%;
+    width: 100%;
+}
+
+/* --- All --- */
+
+.no-padding {
+    padding: 0px;
+}

@@ -1,14 +1,18 @@
 "use strict";
 
 //TODO:
-//Implement Local Storage for videos & check for deletion
-//Then, need to pass videos and play them
-//use classes to get button press
+//stop HTML5 video playback on leaving page
+//check local storage
+//update maps (not to map though :))
+//add aesthetics
+//refactor code
 
 //Change POI icons and decide on animation?
 //offline screen
 //gesture tutorial
 //Move global vars to top
+//check for deletion
+//Camera Preview
 
 document.addEventListener('deviceready', function () {
     console.log('PhoneGap Ready!');
@@ -174,10 +178,6 @@ var map;
 //Global variable for current Location so it can be updated on pageshow and stopped on close
 var currentLocation;
 $(document).on('pageinit', '#maps', function() {
-    //set the height of the map to remaining space
-    var navbarHeight = $("[data-role='footer']").outerHeight() - 1;
-    var screenHeight = $.mobile.getScreenHeight();
-    $('#map').css("height", screenHeight - navbarHeight);
 
     //Define a map
     map = new google.maps.Map(document.getElementById('map'), {
@@ -289,6 +289,16 @@ function addMarker (latitude, longitude, map) {
 
 var watchID;
 $(document).on("pageshow", "#maps", function() {
+    //set the height of the map to remaining space - done on pageshow for accurate height
+    var navbarHeight = $("[data-role='footer']").outerHeight() - 1;
+    var screenHeight = $.mobile.getScreenHeight();
+    var adjustedHeight = screenHeight - navbarHeight;
+
+    //Check to see if height needs adjusting
+    if ($('#map').height() != adjustedHeight) {
+        $('#map').css("height", adjustedHeight);
+    }
+
     watchID = navigator.geolocation.watchPosition(locationSuccess, locationFailure, {
         enableHighAccuracy: true,
         maximumAge: 5000
@@ -332,9 +342,18 @@ $(document).on("pagehide", "#maps", function() {
 // Update the contents of the toolbars
 $(document).on("pagecontainerchange", function () {
     console.log('pagecontainerchange');
+
+    //check if current page is file viewer, if so hide() this and remove select    
     
     // Get the title of the page using data-title in page div
     var current = $(".ui-page-active").jqmData("title");
+
+    if (current == "File View") {
+        $("[data-role='navbar']").hide();
+    } else {
+        $("[data-role='navbar']").show();
+    }
+
 
     // Add active class to current nav button
     $("[data-role='navbar'] a").each(function () {
@@ -415,14 +434,69 @@ function removeMediaFile(filename) {
     updateVideoLocalStorage(mediaFiles);
 }
 
-$(document).on('pagebeforeshow', '#fileview',function() {
+$(document).on('pageinit', '#fileview',function() {
+
+    if (window.cordova){
+        if (device.platform == "Android") {
+            //Define permission variable
+            var permissions = cordova.plugins.permissions;
+            //check if permission exists
+            permissions.checkPermission(permissions.READ_EXTERNAL_STORAGE, success, fail);
+            //permission exists
+            function success() {
+                //Request file read necessary to load video
+                permissions.requestPermission(permissions.READ_EXTERNAL_STORAGE, 
+                    function () {
+                        console.log('File permission granted');
+                    }, 
+                    function() {
+                        console.log('File permission denied');
+                    });
+            }
+            //permission doesn't exist
+            function fail() {
+                console.log('permission failed');
+            }
+                
+        }
+    }
+});
+
+//Needs to be on pageshow as the header height isn't accurate until then
+$(document).on('pageshow', '#fileview', function() {
 
     var name = sessionStorage.getItem("Name");
     var filepath = sessionStorage.getItem("Filepath");
 
     $('#header-title').text(name);
-    $('video').attr({"src": filepath, 
-                    "type": "video/mp4",
-                    "width": "100%",
-                    "height": "100%"});
+    $('video').attr("src", filepath);
+
+    var headerHeight = $("#fileview-header").outerHeight() - 1;
+    var screenHeight = $.mobile.getScreenHeight();
+    $('#video').css("height", screenHeight - headerHeight);
+
+});
+
+var phoneNumber = null;
+$(document).on('pageinit', '#info', function() {
+
+    $('#emergency-tel').change(function() {
+        phoneNumber = $(this).val();
+        
+        updateContactLocalStorage(phoneNumber);
+    });
+
+    function updateContactLocalStorage(contactNumber) {
+        if (localStorage) {
+            localStorage.setItem("Phone", contactNumber.toString());
+        }
+    }
+});
+
+$(document).on('pagebeforecreate', '#info', function() {
+    if (localStorage && localStorage.getItem("Phone")) {
+        var phoneNumber = localStorage.getItem("Phone");
+
+        $('#emergency-tel').val(phoneNumber);
+    }
 });
