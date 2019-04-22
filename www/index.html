@@ -15,6 +15,8 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
+    <link rel="stylesheet" href="css/custom-jqm.css" /> <!-- Theme Roller -->
+    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css" /> <!-- Theme Roller -->
     <link rel="stylesheet" href="css/custom.css" />
 </head>
 
@@ -37,7 +39,7 @@
     <!-- Files Page -->
     <div data-role="page" id="files" data-title="Files" data-theme="b">
         <div data-role="content">            
-            <ul data-role="listview" id="files_list" data-split-icon="delete" data-split-theme="b">
+            <ul data-role="listview" id="files_list" data-split-icon="material-delete" data-split-theme="b" class="ui-nodisc-icon">
             </ul>
         </div>
     </div>
@@ -46,11 +48,11 @@
     <div data-role="page" id="fileview" data-title="File View" data-theme="b">
         <div data-role="header" id="fileview-header">
             <div class="ui-btn-left">
-                    <a href="#files" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-delete"></a>
+                    <a href="#files" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-material-clear ui-nodisc-icon"></a>
             </div>
             <h3 id="header-title">File Viewer</h3>
             <div class="ui-btn-right">
-                    <a href="#" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-camera"></a>
+                    <a href="#" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-material-share ui-nodisc-icon"></a>
             </div>
         </div>
         <div data-role="content" class="no-padding">
@@ -98,10 +100,10 @@
     <div data-role="footer" data-position="fixed" data-tap-toggle="false" data-theme="b">
 		<div data-role="navbar">
 			<ul>
-				<li><a href="#camera" data-icon="video" data-transition="fade">Camera</a></li>
-				<li><a href="#maps" data-icon="location" data-transition="fade">Maps</a></li>
-				<li><a href="#files" data-icon="bullets" data-transition="fade">Files</a></li>
-				<li><a href="#info" data-icon="gear" data-transition="fade">Info</a></li>
+				<li><a href="#camera" data-icon="material-camera" data-transition="fade" class="ui-nodisc-icon">Camera</a></li>
+				<li><a href="#maps" data-icon="material-map" data-transition="fade" class="ui-nodisc-icon">Maps</a></li>
+				<li><a href="#files" data-icon="material-folder" data-transition="fade" class="ui-nodisc-icon">Files</a></li>
+				<li><a href="#info" data-icon="material-info" data-transition="fade" class="ui-nodisc-icon">Info</a></li>
 			</ul>
 		</div>
 	</div>

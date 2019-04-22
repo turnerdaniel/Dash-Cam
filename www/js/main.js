@@ -4,15 +4,18 @@
 //stop HTML5 video playback on leaving page
 //check local storage
 //update maps (not to map though :))
-//add aesthetics
+//change page resze back to init - header size already known 
 //refactor code
+//need to check if already have file permission? 
 
-//Change POI icons and decide on animation?
+//Change POI icons
 //offline screen
 //gesture tutorial
 //Move global vars to top
 //check for deletion
 //Camera Preview
+//Remaining Aesthetics (File viewer centre buttons)
+//Remaining features
 
 document.addEventListener('deviceready', function () {
     console.log('PhoneGap Ready!');
@@ -479,6 +482,9 @@ $(document).on('pageshow', '#fileview', function() {
 
 var phoneNumber = null;
 $(document).on('pageinit', '#info', function() {
+
+    var clear = $('.ui-input-clear');
+    clear.removeClass('ui-icon-delete').addClass('ui-icon-material-clear ui-nodisc-icon');
 
     $('#emergency-tel').change(function() {
         phoneNumber = $(this).val();

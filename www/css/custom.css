@@ -1,4 +1,133 @@
+/* --- Fonts --- */
+/* open-sans-regular - latin */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: local('Open Sans Regular'), local('OpenSans-Regular'), /* Locally installed fonts */
+		 url('fonts/open-sans-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+		 url('fonts/open-sans-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+  }
+/* open-sans-700 - latin */
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 700;
+	src: local('Open Sans Bold'), local('OpenSans-Bold'), /* Locally installed fonts */
+		 url('fonts/open-sans-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+		 url('fonts/open-sans-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
 
+/* --- Icons --- */
+.ui-icon-material-camera:after {
+    background-image: url("images/custom-svg/material-camera.svg");
+    height: 24px;
+    width: 24px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+.ui-icon-material-map:after {
+    background-image: url("images/custom-svg/material-map.svg");
+    height: 24px;
+    width: 24px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+.ui-icon-material-folder:after {
+    background-image: url("images/custom-svg/material-folder.svg");
+    height: 24px;
+    width: 24px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+.ui-icon-material-info:after {
+    background-image: url("images/custom-svg/material-info.svg");
+    height: 24px;
+    width: 24px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+.ui-icon-material-delete:after {
+    background-image: url("images/custom-svg/material-delete.svg");
+    height: 24px;
+    width: 24px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+.ui-icon-material-clear:after {
+    background-image: url("images/custom-svg/material-clear.svg");
+    height: 24px;
+    width: 24px;
+    margin-left: -12px;
+    margin-top: -12px;
+}
+.ui-icon-material-share:after {
+    background-image: url("images/custom-svg/material-share.svg");
+    height: 24px;
+    width: 24px;
+    margin-left: -12px;
+    margin-top: -12px;
+}
+
+/* --- Fallback --- */
+.ui-nosvg .ui-icon-material-camera:after {
+    background-image: url("images/custom-png/material-camera.png");
+    height: 24px;
+    width: 24px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+.ui-nosvg .ui-icon-material-map:after {
+    background-image: url("images/custom-png/material-map.png");
+    height: 24px;
+    width: 24px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+.ui-nosvg .ui-icon-material-folder:after {
+    background-image: url("images/custom-png/material-folder.png");
+    height: 24px;
+    width: 24px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+.ui-nosvg .ui-icon-material-info:after {
+    background-image: url("images/custom-png/material-info.png");
+    height: 24px;
+    width: 24px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+.ui-nosvg .ui-icon-material-delete:after {
+    background-image: url("images/custom-png/material-delete.png");
+    height: 24px;
+    width: 24px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+.ui-nosvg .ui-icon-material-clear:after {
+    background-image: url("images/custom-png/material-clear.png");
+    height: 24px;
+    width: 24px;
+    margin-left: -12px;
+    margin-top: -12px;
+}
+.ui-nosvg .ui-icon-material-share:after {
+    background-image: url("images/custom-png/material-share.png");
+    height: 24px;
+    width: 24px;
+    margin-left: -12px;
+    margin-top: -12px;
+}
+
+/* --- All --- */
+html body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.no-padding {
+    padding: 0px;
+}
 
 /* --- Camera Page --- */
 
@@ -12,13 +141,19 @@
 
 
 /* --- File Viewer --- */
+/*Needs more formatting to be in the centre*/
+#fileview-header .ui-btn-icon-notext {
+    background-color: transparent;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+}
+
 #video {
     height: 100%;
     width: 100%;
 }
 
-/* --- All --- */
-
-.no-padding {
-    padding: 0px;
+/* --- Info Page --- */
+#info .ui-input-text {
+    background-color: #3b5059;
 }
