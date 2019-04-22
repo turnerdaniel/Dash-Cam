@@ -2,9 +2,11 @@
 
 //TODO:
 //stop HTML5 video playback on leaving page
+//change src file to null/empty file/destroy video player to prevent corruption in iPhone
+
 //check local storage
 //update maps (not to map though :))
-//change page resze back to init - header size already known 
+//change page resize back to init - header size already known 
 //refactor code
 //need to check if already have file permission? 
 
