@@ -17,7 +17,7 @@ var phoneNumber = "";
 var allowRun = true;
 
 //TODO:
-//need to read phone number on load
+//GeoFencing
 //Change POI icons
 //offline screen
 //gesture tutorial + notice about geofence
@@ -25,6 +25,7 @@ var allowRun = true;
 //Camera Preview
 //Remaining Aesthetics (File viewer centre buttons)
 //Remaining features
+//Code refactoring
 
 document.addEventListener('deviceready', function () {
     console.log('PhoneGap Ready!');
@@ -60,7 +61,7 @@ function crashDetection(event) {
 
             console.log("G's:", gx, gy, gz);
 
-            navigator.geolocation.getCurrentPosition(locationSuccess, null, {
+            navigator.geolocation.getCurrentPosition(locationSuccess, locationFailure, {
                 enableHighAccuracy: true,
                 maximumAge: 5000
             });
@@ -70,6 +71,8 @@ function crashDetection(event) {
                 var geocoder = new google.maps.Geocoder;
                 var location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 var address = null;
+
+                addMarker(location.lat(), location.lng(), map);
 
                 geocoder.geocode({ 'location': location }, function (results, status) {
                     if (status === 'OK') {
@@ -81,6 +84,12 @@ function crashDetection(event) {
                 });
             }
 
+            function locationFailure() {
+                console.log('location failed');
+                smsMessage(null);
+            }
+
+            //Ensure only a single crash per detection
             setTimeout(function () {
                 allowRun = true;
             }, 5000);
@@ -90,7 +99,7 @@ function crashDetection(event) {
 
 function smsMessage(address) {
     var message;
-    var sms;
+    var sms = "sms:";
     
     if (address) {
         message = encodeURIComponent("I've just been in a collision near " + address +  ". Please come as soon as you can!");
@@ -100,19 +109,18 @@ function smsMessage(address) {
 
     if (device.platform == "Android") {
         message = "?body=" + message;
-        sms = "sms://";
+        if (phoneNumber.length > 4) {
+            sms = "sms://";
+        } 
     } else if (device.platform == "iOS") {
         message = "&body=" + message;
-        sms = "sms:"; 
     } else {
         message = "";
-        sms = "sms:"; 
     }
 
     if (phoneNumber) {
         console.log(sms + phoneNumber + message);
         window.location.href = sms + phoneNumber + message;
-
     } else {
         sms = "sms:";
         console.log(sms + message);
@@ -122,6 +130,7 @@ function smsMessage(address) {
 
 $(document).on('pageinit', '#camera', function() {
 
+    phoneNumber = readPhoneNumberLocalStorage();
     mediaFiles = readVideoLocalStorage();
 
     $('#addPOI').click(function() {
@@ -564,6 +573,10 @@ $(document).on('pageinit', '#info', function() {
     var clear = $('.ui-input-clear');
     clear.removeClass('ui-icon-delete').addClass('ui-icon-material-clear ui-nodisc-icon');
 
+    if (phoneNumber) {
+        $('#emergency-tel').val(phoneNumber);
+    }
+
     $('#emergency-tel').change(function() {
         phoneNumber = $(this).val();
         
@@ -577,10 +590,12 @@ $(document).on('pageinit', '#info', function() {
     }
 });
 
-$(document).on('pagebeforecreate', '#info', function() {
-    if (localStorage && localStorage.getItem("Phone")) {
-        phoneNumber = localStorage.getItem("Phone");
+function readPhoneNumberLocalStorage() {
+    var number = "";
 
-        $('#emergency-tel').val(phoneNumber);
+    if (localStorage && localStorage.getItem("Phone")) {
+        number = localStorage.getItem("Phone");
     }
-});
+
+    return number;
+}
