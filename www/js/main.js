@@ -1,20 +1,16 @@
 "use strict";
 
-//TODO:
-//stop HTML5 video playback on leaving page
-//change src file to null/empty file/destroy video player to prevent corruption in iPhone
+//Global Variables
 
-//check local storage
-//update maps (not to map though :))
-//change page resize back to init - header size already known 
-//refactor code
-//need to check if already have file permission? 
+//TODO:
+//Move global vars to top
+//other features
 
 //Change POI icons
 //offline screen
-//gesture tutorial
-//Move global vars to top
-//check for deletion
+//gesture tutorial + notice about geofence
+
+//File deletion + checking
 //Camera Preview
 //Remaining Aesthetics (File viewer centre buttons)
 //Remaining features
@@ -185,7 +181,7 @@ var currentLocation;
 $(document).on('pageinit', '#maps', function() {
 
     //Define a map
-    map = new google.maps.Map(document.getElementById('map'), {
+    map = new google.maps.Map(document.getElementById('gmap'), {
         mapTypeId: 'roadmap',
         center: { lat: 52.874793, lng: -1.485785 },
         zoom: 8,
@@ -300,8 +296,8 @@ $(document).on("pageshow", "#maps", function() {
     var adjustedHeight = screenHeight - navbarHeight;
 
     //Check to see if height needs adjusting
-    if ($('#map').height() != adjustedHeight) {
-        $('#map').css("height", adjustedHeight);
+    if ($('#gmap').height() != adjustedHeight) {
+        $('#gmap').css("height", adjustedHeight);
     }
 
     watchID = navigator.geolocation.watchPosition(locationSuccess, locationFailure, {
@@ -346,17 +342,15 @@ $(document).on("pagehide", "#maps", function() {
 
 // Update the contents of the toolbars
 $(document).on("pagecontainerchange", function () {
-    console.log('pagecontainerchange');
-
-    //check if current page is file viewer, if so hide() this and remove select    
+    console.log('pagecontainerchange');  
     
     // Get the title of the page using data-title in page div
     var current = $(".ui-page-active").jqmData("title");
 
     if (current == "File View") {
-        $("[data-role='navbar']").hide();
+        $("[data-role='footer']").hide();
     } else {
-        $("[data-role='navbar']").show();
+        $("[data-role='footer']").show();
     }
 
 
@@ -467,7 +461,7 @@ $(document).on('pageinit', '#fileview',function() {
     }
 });
 
-//Needs to be on pageshow as the header height isn't accurate until then
+
 $(document).on('pageshow', '#fileview', function() {
 
     var name = sessionStorage.getItem("Name");
@@ -478,8 +472,20 @@ $(document).on('pageshow', '#fileview', function() {
 
     var headerHeight = $("#fileview-header").outerHeight() - 1;
     var screenHeight = $.mobile.getScreenHeight();
-    $('#video').css("height", screenHeight - headerHeight);
+    var adjustedHeight = screenHeight - headerHeight;
 
+    //Check to see if height needs adjusting
+    if ($('#video').height() != adjustedHeight) {
+        $('#video').css("height", adjustedHeight);
+    }
+});
+
+$(document).on('pagehide', '#fileview', function() {
+
+    //Get DOM element of video
+    var video = document.getElementById('video');
+    //Pause so that it stops playing when navigating to different page
+    video.pause();
 });
 
 var phoneNumber = null;

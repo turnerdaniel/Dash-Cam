@@ -132,7 +132,7 @@ html body {
 /* --- Camera Page --- */
 
 /* --- Map Page --- */
-#map {
+#gmap {
     height: 100vh;
     width: 100%;
 }
@@ -151,6 +151,7 @@ html body {
 #video {
     height: 100%;
     width: 100%;
+    position: absolute;
 }
 
 /* --- Info Page --- */

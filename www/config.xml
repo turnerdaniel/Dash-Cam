@@ -52,7 +52,6 @@
     <plugin name="cordova-plugin-media-capture" />
     <plugin name="cordova-plugin-console" />
     <plugin name="cordova-plugin-device" />
-    <plugin name="cordova-plugin-device-orientation" />
     <plugin name="cordova-plugin-dialogs" />
 	<plugin name="cordova-plugin-vibration" />
     <plugin name="cordova-plugin-geolocation" />
