@@ -1,15 +1,26 @@
 "use strict";
 
 //Global Variables
+//Hold all recored videos
+var mediaFiles = [];
+//Hold GMaps marker objects
+var markers = [];
+//Hold map element
+var map;
+//Hold user's location
+var currentLocation;
+//Hold the geolocation watch ID to allow revocation
+var watchID;
+//Hold the user's emergency contact number
+var phoneNumber = "";
+//Hold whether function has been run recently
+var allowRun = true;
 
 //TODO:
-//Move global vars to top
-//other features
-
+//need to read phone number on load
 //Change POI icons
 //offline screen
 //gesture tutorial + notice about geofence
-
 //File deletion + checking
 //Camera Preview
 //Remaining Aesthetics (File viewer centre buttons)
@@ -18,13 +29,7 @@
 document.addEventListener('deviceready', function () {
     console.log('PhoneGap Ready!');
 
-    // window.addEventListener('devicemotion', function (event) {
-    //     console.log(event.acceleration.x);
-    //     console.log(event.acceleration.y);
-    //     console.log(event.acceleration.z);
-    // }, true);
-
-    //Can send sms using sms://00000000&body=message - may need investigation for android
+    window.addEventListener('devicemotion', crashDetection, true);
 
     initNav();
 }, false);
@@ -41,7 +46,80 @@ function initNav() {
     $("[data-role='header'], [data-role='footer']" ).toolbar();
 }
 
-var mediaFiles = [];
+function crashDetection(event) {
+    var gravity = 9.81; /* m per s^2 */
+    var gx = event.acceleration.x / gravity;
+    var gy = event.acceleration.y / gravity;
+    var gz = event.acceleration.z / gravity;
+    //Define threshold
+    var t = 5;
+
+    if (gx > t || gy > t || gz > t || gx < -t || gy < -t || gz < -t) {
+        if (allowRun) {
+            allowRun = false;
+
+            console.log("G's:", gx, gy, gz);
+
+            navigator.geolocation.getCurrentPosition(locationSuccess, null, {
+                enableHighAccuracy: true,
+                maximumAge: 5000
+            });
+
+            function locationSuccess(position) {
+
+                var geocoder = new google.maps.Geocoder;
+                var location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                var address = null;
+
+                geocoder.geocode({ 'location': location }, function (results, status) {
+                    if (status === 'OK') {
+                        if (results[0]) {
+                            address = results[0].formatted_address;
+                        }
+                    }
+                    smsMessage(address);
+                });
+            }
+
+            setTimeout(function () {
+                allowRun = true;
+            }, 5000);
+        }
+    }
+}
+
+function smsMessage(address) {
+    var message;
+    var sms;
+    
+    if (address) {
+        message = encodeURIComponent("I've just been in a collision near " + address +  ". Please come as soon as you can!");
+    } else {
+        message = encodeURIComponent("I've just been in a collision. Please contact me as soon as you can!");
+    }
+
+    if (device.platform == "Android") {
+        message = "?body=" + message;
+        sms = "sms://";
+    } else if (device.platform == "iOS") {
+        message = "&body=" + message;
+        sms = "sms:"; 
+    } else {
+        message = "";
+        sms = "sms:"; 
+    }
+
+    if (phoneNumber) {
+        console.log(sms + phoneNumber + message);
+        window.location.href = sms + phoneNumber + message;
+
+    } else {
+        sms = "sms:";
+        console.log(sms + message);
+        window.location.href = sms + message;
+    }
+}
+
 $(document).on('pageinit', '#camera', function() {
 
     mediaFiles = readVideoLocalStorage();
@@ -172,12 +250,6 @@ function updateVideoLocalStorage(videoArray) {
     }
 }
 
-//Global variable holding GMaps marker objects
-var markers = [];
-//Global variable for map so can be changed outside of page 
-var map;
-//Global variable for current Location so it can be updated on pageshow and stopped on close
-var currentLocation;
 $(document).on('pageinit', '#maps', function() {
 
     //Define a map
@@ -288,7 +360,6 @@ function addMarker (latitude, longitude, map) {
     
 }
 
-var watchID;
 $(document).on("pageshow", "#maps", function() {
     //set the height of the map to remaining space - done on pageshow for accurate height
     var navbarHeight = $("[data-role='footer']").outerHeight() - 1;
@@ -488,7 +559,6 @@ $(document).on('pagehide', '#fileview', function() {
     video.pause();
 });
 
-var phoneNumber = null;
 $(document).on('pageinit', '#info', function() {
 
     var clear = $('.ui-input-clear');
@@ -509,7 +579,7 @@ $(document).on('pageinit', '#info', function() {
 
 $(document).on('pagebeforecreate', '#info', function() {
     if (localStorage && localStorage.getItem("Phone")) {
-        var phoneNumber = localStorage.getItem("Phone");
+        phoneNumber = localStorage.getItem("Phone");
 
         $('#emergency-tel').val(phoneNumber);
     }
