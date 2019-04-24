@@ -25,8 +25,7 @@ var shareOptions;
     //iOS update check? eg. need to get current directory?
     //More than 10 in array? remove!
 //Camera Preview
-
-//road test
+//disallow overscroll
 
 //Change POI icons
 //offline screen

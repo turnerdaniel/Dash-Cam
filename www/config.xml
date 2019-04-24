@@ -79,7 +79,7 @@
     <!-- Third party plugins -->
     <plugin name="cordova-plugin-android-permissions" spec="1" source="npm" />
     <plugin name="cordova-plugin-x-socialsharing" spec="5.4.4" source="npm" />
-    <platform name="android">
+    <platform name="android"> <!-- PGB requires swift >3.0 (this is 2.3) -->
         <plugin name="cordova-plugin-geofence" spec="0.7.0" source="npm" />
     </platform>
 
