@@ -15,9 +15,14 @@ var watchID;
 var phoneNumber = "";
 //Hold whether function has been run recently
 var allowRun = true;
+//Hold sharing options that are updated appropriately
+var shareOptions;
 
 //TODO:
 //GeoFencing
+//Social Sharing 
+//Refactoring
+
 //Change POI icons
 //offline screen
 //gesture tutorial + notice about geofence
@@ -539,6 +544,22 @@ $(document).on('pageinit', '#fileview',function() {
                 
         }
     }
+
+    $('#share').on('click', function() {
+        if (shareOptions) {
+            window.plugins.socialsharing.shareWithOptions(shareOptions,
+                function (result) {
+                    // On Android apps mostly return false even while it's true
+                    console.log("Share completed? " + result.completed);
+                    // On Android result.app since plugin version 5.4.0 this is no longer empty. On iOS it's empty when sharing is cancelled (result.completed=false)
+                    console.log("Shared to app: " + result.app);
+                },
+                function (error) {
+                    console.log("Sharing failed with message: " + error);
+                }
+            );
+        }
+    });
 });
 
 
@@ -558,6 +579,13 @@ $(document).on('pageshow', '#fileview', function() {
     if ($('#video').height() != adjustedHeight) {
         $('#video').css("height", adjustedHeight);
     }
+
+    //update sharing options for current video
+    shareOptions = { 
+        message: 'This is a video which I recorded using Dash Cam!',
+        subject: 'Saved Video from Dash Cam!',
+        files: [filepath]
+    };
 });
 
 $(document).on('pagehide', '#fileview', function() {

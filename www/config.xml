@@ -78,6 +78,7 @@
 
     <!-- Third party plugins -->
     <plugin name="cordova-plugin-android-permissions" spec="1" source="npm" />
+    <plugin name="cordova-plugin-x-socialsharing" spec="5.4.4" source="npm" />
  
 	<!--these are generic not good enough for a live build - you will need to be os and device specific (android can use 9 slice png)-->
 	<icon src="icon.png" />
