@@ -19,18 +19,19 @@ var allowRun = true;
 var shareOptions;
 
 //TODO:
-//GeoFencing
-//Social Sharing 
 //Refactoring
+//File Delete
+//File read involves check if still exists
+    //iOS update check? eg. need to get current directory?
+    //More than 10 in array? remove!
+//Camera Preview
+
+//road test
 
 //Change POI icons
 //offline screen
 //gesture tutorial + notice about geofence
-//File deletion + checking
-//Camera Preview
 //Remaining Aesthetics (File viewer centre buttons)
-//Remaining features
-//Code refactoring
 
 document.addEventListener('deviceready', function () {
     console.log('PhoneGap Ready!');
@@ -253,7 +254,8 @@ $(document).on('pageinit', '#camera', function() {
     }
 
     $('#testVideoJSON').click(function() {
-        updateVideoLocalStorage(mediaFiles);
+        getGeofences();
+        //updateVideoLocalStorage(mediaFiles);
         //localStorage.setItem("Videos", '[{"name":"VID_20190420_135427.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}, {"name":"VID_20190420_135428.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}, {"name":"VID_20190420_135429.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}]');
     });
 });
@@ -308,12 +310,14 @@ $(document).on('pageinit', '#maps', function() {
     if (localStorage && localStorage.getItem('POIs')) {
         var markerArray = JSON.parse(localStorage.getItem("POIs"));
         $.each(markerArray, function() {
-            addMarker(this.lat, this.lng, map);
+            //ensure geofences aren't re-added
+            addMarker(this.lat, this.lng, map, false);
         });
     }
 
     //Add markers when map is clicked
     map.addListener('click', function(position) {
+        console.log('map clicked');
         addMarker(position.latLng.lat(), position.latLng.lng(), map);
     });
 });
@@ -332,14 +336,17 @@ function updateMarkerLocalStorage(markerArray) {
     }
 }
 
-function addMarker (latitude, longitude, map) {
+function addMarker (latitude, longitude, map, singleInit = true) {
+    //Custom ID for keeping track of marker
+    var latLngId = latitude.toString() + longitude.toString();
+
     //check to see if map has been initialised
     if (map) {
         var marker = new google.maps.Marker({
             position: {lat: latitude, lng: longitude},
             map: map,
             //Custom ID for keeping track of marker
-            id: latitude.toString() + longitude.toString()
+            id: latLngId
         });
     
         marker.addListener('click', function() {
@@ -349,6 +356,8 @@ function addMarker (latitude, longitude, map) {
                     this.setMap(null);
                     //Remove the marker from array
                     markers.splice(i, 1);
+                    //Remove Geofence
+                    removeGeofence(this.get('id'));
                     //Ensure one marker removed per click
                     break;
                 }
@@ -363,7 +372,9 @@ function addMarker (latitude, longitude, map) {
         //create a marker at position that's not assigned to a map
         var shallowMarker = new google.maps.Marker({
             position: {lat: latitude, lng: longitude},
-            map: null
+            map: null,
+            //Custom ID for keeping track of marker
+            id: latLngId
         });
         //Add to array so that it can be assigned to map during local storage initialisation
         markers.push(shallowMarker);
@@ -371,7 +382,58 @@ function addMarker (latitude, longitude, map) {
         //Remove marker to avoid duplicates
         markers.pop();
     }
-    
+
+    //ensure that isn't called on marker group initialisation
+    if (singleInit) {
+        console.log("single initialisation of geofence");
+        addGeofence(latLngId, latitude, longitude);
+    }
+}
+
+function addGeofence(id, lat, lng) {
+    if (device.platform == "Android") {
+        //Dont need to initialise
+        window.geofence.addOrUpdate({
+            id: id,
+            latitude: lat,
+            longitude: lng,
+            radius: 1000,
+            transitionType: TransitionType.ENTER,
+            notification: {
+                title: "Dash Cam!",
+                text: "You are getting close to a marked location. Watch out!",
+                openAppOnClick: true
+            }
+        }).then(function() {
+            console.log("Geofence success");
+        },
+        function () {
+            console.log("Geofence fail");
+        });
+    }
+}
+
+function removeGeofence(id) {
+    if (device.platform =="Android") {
+        window.geofence.remove(id).then(
+            function() {
+                console.log('Geofence sucessfully removed');
+            }, 
+            function(error) {
+                console.log('Removing geofence failed', error);
+            }
+        );   
+    }
+}
+
+function getGeofences() {
+    if (device.platform == "Android") {
+
+        window.geofence.getWatched().then(function (geofencesJson) {
+            var geofences = JSON.parse(geofencesJson);
+            console.log(geofences);
+        });
+    }
 }
 
 $(document).on("pageshow", "#maps", function() {
@@ -476,10 +538,8 @@ $(document).on('pagebeforeshow', '#files', function() {
                 '</a>' +
                 '<a href="#" class="delete-video" data-name="' + name + '">Delete Video</a>' +
                 '</li>';
-
-            console.log(content);
         }
-
+        console.log(content);
 
         $('#files_list').empty();
         $('#files_list').html(content);
