@@ -19,13 +19,10 @@ var allowRun = true;
 var shareOptions;
 
 //TODO:
-//Refactoring
-//File Delete
-//File read involves check if still exists
-    //iOS update check? eg. need to get current directory?
-    //More than 10 in array? remove!
-//Camera Preview
 //disallow overscroll
+
+//Camera Preview
+//Refactoring
 
 //--- @ end
 //Photoshop the notification and show example of notification sound
@@ -208,48 +205,6 @@ $(document).on('pageinit', '#camera', function() {
 
         if (localStorage && localStorage.getItem('Videos')) {
             videoArray = JSON.parse(localStorage.getItem("Videos"));
-
-            if (window.cordova) {
-                //console.log('Cordova Device');
-                //Check if file exists, remove from array if not
-
-                // for (var i = videoArray.length - 1; i >= 0; i--) {
-                //     window.resolveLocalFileSystemURL(videoArray[i].fullPath,
-                //         function (entry) {
-                //             alert("resolved to" + entry.toURL());                            
-                //             console.log('video exists');
-                //         },
-                //         function () {
-                //             console.log('video was deleted');
-                //             videoArray.splice(i, 1);
-                //         }
-                //     );
-                // }
-
-                // for (var i = videoArray.length - 1; i >= 0; i--) {
-                //     (function (i) {
-
-                //         var path;
-                //         if (device.platform == "iOS") {
-                //             path = "file://" + videoArray[i].fullPath.slice(9)
-                //         } else {
-                //             path = videoArray[i].fullPath;
-                //         }
-                //         alert(path);
-
-                //         window.resolveLocalFileSystemURL(path,
-                //             function (entry) {
-                //                 alert("resolved to" + entry.toURL());                            
-                //                 console.log('video exists' + i);
-                //             },
-                //             function () {
-                //                 console.log('video was deleted' + i);
-                //                 videoArray.splice(i, 1);
-                //             });
-                //     })(i);
-                // }
-
-            }
         }
 
         return videoArray;
@@ -514,8 +469,12 @@ $(document).on("pagecontainerchange", function () {
 $(document).on('pagebeforeshow', '#files', function() {
     console.log('before files shown');
 
+    //need to remove files over 10 in length
+
     if (localStorage && localStorage.getItem('Videos')) {
-        var mediaFiles = JSON.parse(localStorage.getItem("Videos"));
+        mediaFiles = JSON.parse(localStorage.getItem("Videos"));
+
+        checkNumberOfFiles();
     }
 
     var content = '';
@@ -538,7 +497,7 @@ $(document).on('pagebeforeshow', '#files', function() {
                 '<p>' + date + '</p>' +
                 '<p>' + filesize + ' MB</p>' +
                 '</a>' +
-                '<a href="#" class="delete-video" data-name="' + name + '">Delete Video</a>' +
+                '<a href="#" class="delete-video" data-name="' + name + '" data-filepath="' + filepath + '">Delete Video</a>' +
                 '</li>';
         }
         console.log(content);
@@ -548,22 +507,24 @@ $(document).on('pagebeforeshow', '#files', function() {
         $('#files_list').listview('refresh');
 
         $("#files_list li .play-video").on('click', function () {
-            console.log('clicked File');
+            console.log('Clicked File');
 
             var name = $(this).data("name");
-            var filepath = $(this).data("filepath");
+            var path = $(this).data("filepath");
 
             sessionStorage.setItem("Name", name.toString());
-            sessionStorage.setItem("Filepath", filepath.toString());
-
+            sessionStorage.setItem("Filepath", path.toString());
         });
 
         $("#files_list li .delete-video").on('click', function () {
             console.log('Clicked Delete');
 
             var name = $(this).data("name");
+            var path = $(this).data("filepath");
             $(this).parent().remove();
 
+
+            deleteFile(path);
             removeMediaFile(name);
         });
     }
@@ -578,6 +539,64 @@ function removeMediaFile(filename) {
         }
     }
     updateVideoLocalStorage(mediaFiles);
+}
+
+function deleteFile(filepath) {
+    //Add file:// to iOS filepaths
+    if (filepath.substring(0, 7) != "file://") {
+        filepath = "file://" + filepath;
+    }
+
+    window.resolveLocalFileSystemURL(filepath, function(file) {
+            if (device.platform == "Android") {
+                var permissions = cordova.plugins.permissions;
+
+                permissions.requestPermission(permissions.WRITE_EXTERNAL_STORAGE, function () {
+                        console.log('File write permission granted');
+                        del(file);
+                    }, 
+                    function() {
+                        console.log('File write permission denied');
+                    }
+                );
+            } else {
+                del(file);
+            }
+        },
+        function(error) {
+            console.log("Couldn't resolve File", error);
+        }
+    );
+
+    function del(fileObj) {
+        fileObj.remove(function() {
+            console.log("File removed");
+        },
+        function(error) {
+            console.log("Couldn't remove file", error);
+        });
+    }
+}
+
+function checkNumberOfFiles() {
+    if (mediaFiles) {
+        var maxLength = 10;
+        if (mediaFiles.length > maxLength) {
+            console.log("More than 10 Videos.");
+
+            var start = mediaFiles.length - (maxLength + 1);                
+            
+            for (var i = start; i >= 0; i--) {
+                var name = mediaFiles[i].name;
+                var filename = mediaFiles[i].fullPath;
+
+                console.log("Deleting: ", mediaFiles[i]);
+
+                deleteFile(filename);
+                removeMediaFile(name);
+            }
+        }
+    }
 }
 
 $(document).on('pageinit', '#fileview',function() {
