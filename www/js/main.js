@@ -27,6 +27,9 @@ var shareOptions;
 //Camera Preview
 //disallow overscroll
 
+//--- @ end
+//Photoshop the notification and show example of notification sound
+
 //Change POI icons
 //offline screen
 //gesture tutorial + notice about geofence
@@ -406,8 +409,8 @@ function addGeofence(id, lat, lng) {
         }).then(function() {
             console.log("Geofence success");
         },
-        function () {
-            console.log("Geofence fail");
+        function (error) {
+            console.log("Geofence fail", error);
         });
     }
 }
