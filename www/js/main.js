@@ -19,10 +19,11 @@ var allowRun = true;
 var shareOptions;
 
 //TODO:
+//camera preview not full screen & !!!!!change to after init!!!!!!
 //Change POI icons
 //offline screen
 //gesture tutorial + notice about geofence
-//Remaining Aesthetics (File viewer centre buttons/camera buttons/black around video)
+//Remaining Aesthetics (File viewer centre buttons/camera buttons/black around video/blue glow)
 //disallow overscroll
 //Refactoring & commenting
 
