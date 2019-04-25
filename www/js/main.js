@@ -19,18 +19,15 @@ var allowRun = true;
 var shareOptions;
 
 //TODO:
-//disallow overscroll
-
-//Camera Preview
-//Refactoring
-
-//--- @ end
-//Photoshop the notification and show example of notification sound
-
 //Change POI icons
 //offline screen
 //gesture tutorial + notice about geofence
-//Remaining Aesthetics (File viewer centre buttons)
+//Remaining Aesthetics (File viewer centre buttons/camera buttons/black around video)
+//disallow overscroll
+//Refactoring & commenting
+
+//--- @ end
+//Photoshop the notification and show example of notification sound
 
 document.addEventListener('deviceready', function () {
     console.log('PhoneGap Ready!');
@@ -38,6 +35,8 @@ document.addEventListener('deviceready', function () {
     window.addEventListener('devicemotion', crashDetection, true);
 
     initNav();
+
+
 }, false);
 
 $(document).ready(function () {
@@ -222,6 +221,48 @@ function updateVideoLocalStorage(videoArray) {
         localStorage.setItem("Videos", JSON.stringify(videoArray));
     }
 }
+
+function initCameraPreview() {
+
+    var options = {
+        width: window.screen.width,
+        height: window.screen.height,
+        camera: CameraPreview.CAMERA_DIRECTION.BACK,
+        toBack: true,
+        tapPhoto: false,
+        tapFocus: false
+    }
+
+    CameraPreview.startCamera(options);
+}
+
+$(document).on('pagebeforeshow', '#camera', function() {
+    console.log("camera shown");
+    //make camera always transparent and then just alter body :)
+    $('body').css('background-color', 'transparent');
+
+    //May need to change to page show or later - more testing...
+    //if not, I can do flag using init
+
+    //console.log("Set Height", screenHeight, "-", navbarHeight, "=", adjustedHeight);
+    //console.log("Current Height", $.mobile.getScreenHeight() - ($("[data-role='footer']").outerHeight() - 1));
+
+    if (window.cordova) {
+        if (device.platform == "Android" || device.platform == "iOS") {
+            initCameraPreview();
+        }
+    }
+});
+
+$(document).on('pagebeforehide', '#camera', function() {
+    $('body').css('background-color', '#48626d');
+
+    if (window.cordova) {
+        if (device.platform == "Android" || device.platform == "iOS") {
+            CameraPreview.stopCamera();
+        }
+    }
+});
 
 $(document).on('pageinit', '#maps', function() {
 

@@ -130,6 +130,9 @@ html body {
 }
 
 /* --- Camera Page --- */
+html body #camera {
+    background-color: transparent;
+} 
 
 /* --- Map Page --- */
 #gmap {

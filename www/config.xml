@@ -73,15 +73,16 @@
     </edit-config>
     <!-- Geolocation -->
     <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
-        <string>We need access to your location to find you on the map.</string>
+        <string>We need access to your location to find you on the map and set up geofences.</string>
     </edit-config>
 
     <!-- Third party plugins -->
     <plugin name="cordova-plugin-android-permissions" spec="1" source="npm" />
     <plugin name="cordova-plugin-x-socialsharing" spec="5.4.4" source="npm" />
-    <platform name="android"> <!-- PGB requires swift >3.0 (this is 2.3) -->
+    <platform name="android"> <!-- Cordova cli 8.0.0 requires swift >3.0 (this is 2.3) -->
         <plugin name="cordova-plugin-geofence" spec="0.7.0" source="npm" />
     </platform>
+    <plugin spec="https://github.com/cordova-plugin-camera-preview/cordova-plugin-camera-preview.git#e417df8" source="git" />
 
 
 	<!--these are generic not good enough for a live build - you will need to be os and device specific (android can use 9 slice png)-->
