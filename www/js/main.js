@@ -19,13 +19,12 @@ var allowRun = true;
 var shareOptions;
 
 //TODO:
-//Change POI icons
 //offline screen
 //gesture tutorial + notice about geofence
-//Remaining Aesthetics (blue glow)
-//icon png sizes may be too small
-//disallow overscroll
-//Refactoring & commenting
+//my location button
+//Change POI icons
+//App Icon
+//Refactoring & commenting & Remve stuff from config.xml 
 //what if no camera permission?
 
 //--- @ end

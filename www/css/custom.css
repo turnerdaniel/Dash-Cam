@@ -187,6 +187,12 @@ html body {
     padding: 0px;
 }
 
+/* --- Navigation Bar --- */
+html body #nav .ui-btn:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
 /* --- Camera Page --- */
 html body #camera {
     background-color: transparent;
@@ -205,6 +211,15 @@ html body #camera {
     margin-bottom: 2%;
 }
 
+#camera #startRecording:active {
+    background-color: #af0202;
+}
+
+#camera #startRecording:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
 #camera #addPOI {
     position: fixed;
     background-color: #3184FF;
@@ -217,6 +232,16 @@ html body #camera {
     bottom: 0px;
     margin-right: 2%;
     margin-bottom: 2%;
+}
+
+#camera #addPOI:active {
+    background-color: #2565c5;
+}
+
+#camera #addPOI:focus {
+    /* Remove blue glow on focus */
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 /* --- Map Page --- */
@@ -268,8 +293,44 @@ html body #camera {
     width: auto;
 }
 
-/* --- Navigation Bar --- */
+/* --- Files Page --- */
+#files #files_list .play-video {
+    background-color: #607d8b;
+    border-color: #80a7bb;
+    border-right-color: #607d8b;
+}
 
+#files #files_list .ui-first-child .play-video {
+    border-top-color: #607d8b;
+}
+
+#files #files_list .play-video:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#files #files_list .play-video:active {
+    background-color: #80a7bb;
+}
+
+#files #files_list .delete-video {
+    background-color: #607d8b;
+    border-color: #80a7bb;
+    border-left-color: #607d8b;
+}
+
+#files #files_list .ui-first-child .delete-video {
+    border-top-color: #607d8b;
+}
+
+#files #files_list .delete-video:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#files #files_list .delete-video:active {
+    background-color: #80a7bb;
+}
 
 /* --- File Viewer --- */
 #fileview-header #back {
@@ -301,11 +362,14 @@ html body #camera {
     width: 100%;
     background-color: #000000; 
     object-fit: fill;
-
-    /* Fill seems like better choice - needs test */
 }
 
 /* --- Info Page --- */
 #info .ui-input-text {
     background-color: #3b5059;
+}
+
+#info .ui-input-clear:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
