@@ -68,6 +68,22 @@
     margin-left: -12px;
     margin-top: -12px;
 }
+.ui-icon-material-video:after {
+    background-image: url("images/custom-svg/material-video.svg");
+    background-size: 70px 70px;
+    height: 70px;
+    width: 70px;
+    margin-left: -35px;
+    margin-top: -35px;
+}
+.ui-icon-material-addPOI:after {
+    background-image: url("images/custom-svg/material-addPOI.svg");
+    background-size: 40px 40px;
+    height: 40px;
+    width: 40px;
+    margin-left: -20px;
+    margin-top: -20px;
+}
 
 /* --- Fallback --- */
 .ui-nosvg .ui-icon-material-camera:after {
@@ -119,6 +135,22 @@
     margin-left: -12px;
     margin-top: -12px;
 }
+.ui-nosvg .ui-icon-material-video:after {
+    background-image: url("images/custom-png/material-video.png");
+    background-size: 70px 70px;
+    height: 70px;
+    width: 70px;
+    margin-left: -35px;
+    margin-top: -35px;
+}
+.ui-nosvg .ui-icon-material-addPOI:after {
+    background-image: url("images/custom-png/material-addPOI.png");
+    background-size: 40px 40px;
+    height: 40px;
+    width: 40px;
+    margin-left: -20px;
+    margin-top: -20px;
+}
 
 /* --- All --- */
 html body {
@@ -133,6 +165,31 @@ html body {
 html body #camera {
     background-color: transparent;
 } 
+
+#camera .record-btn {
+    position: fixed;
+    background-color: #d50000;
+    border-radius: 100%;
+    border-color: #af0202;
+    height: 120px;
+    width: 120px;
+    left: calc(50% - 60px);
+    bottom: 0px;
+    margin-bottom: 2%;
+}
+
+#camera .poi-btn {
+    position: fixed;
+    background-color: #3184FF;
+    border-radius: 100%;
+    border-color: #2565c5;
+    height: 75px;
+    width: 75px;
+    right: 0px;
+    bottom: 0px;
+    margin-right: 2%;
+    margin-bottom: 2%;
+}
 
 /* --- Map Page --- */
 #gmap {

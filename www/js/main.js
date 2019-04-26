@@ -19,11 +19,10 @@ var allowRun = true;
 var shareOptions;
 
 //TODO:
-//camera preview not full screen & !!!!!change to after init!!!!!!
 //Change POI icons
 //offline screen
 //gesture tutorial + notice about geofence
-//Remaining Aesthetics (File viewer centre buttons/camera buttons/black around video/blue glow)
+//Remaining Aesthetics (File viewer centre buttons/black around video/blue glow)
 //disallow overscroll
 //Refactoring & commenting
 //what if no camera permission?
@@ -37,8 +36,9 @@ document.addEventListener('deviceready', function () {
     window.addEventListener('devicemotion', crashDetection, true);
 
     initNav();
-
     initCameraPreview();
+    initCameraButtons();
+
     $(document).on('pagebeforeshow', '#camera', initCameraPreview);
 }, false);
 
@@ -46,6 +46,7 @@ $(document).ready(function () {
     console.log("Browser Ready!");
 
     initNav();
+    initCameraButtons();
 });
 
 function initNav() {
@@ -211,15 +212,6 @@ $(document).on('pageinit', '#camera', function() {
 
         return videoArray;
     }
-
-    $('#testVideoJSON').click(function() {
-
-        console.log("still works :)");
-
-        //getGeofences();
-        //updateVideoLocalStorage(mediaFiles);
-        //localStorage.setItem("Videos", '[{"name":"VID_20190420_135427.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}, {"name":"VID_20190420_135428.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}, {"name":"VID_20190420_135429.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}]');
-    });
 });
 
 function updateVideoLocalStorage(videoArray) {
@@ -242,6 +234,13 @@ function initCameraPreview() {
     };
 
     CameraPreview.startCamera(options);
+}
+
+function initCameraButtons() {
+    var navbarHeight = $("[data-role='footer']").outerHeight() - 1;
+    
+    $('#startRecording').css('bottom', navbarHeight);
+    $('#addPOI').css('bottom', navbarHeight);
 }
 
 $(document).on('pagebeforehide', '#camera', function() {
