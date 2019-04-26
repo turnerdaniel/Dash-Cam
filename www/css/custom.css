@@ -21,52 +21,65 @@
 /* --- Icons --- */
 .ui-icon-material-camera:after {
     background-image: url("images/custom-svg/material-camera.svg");
+    background-size: 24px 24px;
     height: 24px;
     width: 24px;
     -webkit-border-radius: 0px;
     border-radius: 0px;
+    margin-left: -12px;
 }
 .ui-icon-material-map:after {
     background-image: url("images/custom-svg/material-map.svg");
+    background-size: 24px 24px;
     height: 24px;
     width: 24px;
     -webkit-border-radius: 0px;
     border-radius: 0px;
+    margin-left: -12px;
 }
 .ui-icon-material-folder:after {
     background-image: url("images/custom-svg/material-folder.svg");
+    background-size: 24px 24px;
     height: 24px;
     width: 24px;
     -webkit-border-radius: 0px;
     border-radius: 0px;
+    margin-left: -12px;
 }
 .ui-icon-material-info:after {
     background-image: url("images/custom-svg/material-info.svg");
+    background-size: 24px 24px;
     height: 24px;
     width: 24px;
     -webkit-border-radius: 0px;
     border-radius: 0px;
+    margin-left: -12px;
 }
 .ui-icon-material-delete:after {
     background-image: url("images/custom-svg/material-delete.svg");
-    height: 24px;
-    width: 24px;
+    background-size: 28px 28px;
+    height: 28px;
+    width: 28px;
     -webkit-border-radius: 0px;
     border-radius: 0px;
+    margin-left: -14px;
+    margin-top: -14px;
 }
 .ui-icon-material-clear:after {
     background-image: url("images/custom-svg/material-clear.svg");
-    height: 24px;
-    width: 24px;
-    margin-left: -12px;
-    margin-top: -12px;
+    background-size: 34px 34px;
+    height: 34px;
+    width: 34px;
+    margin-left: -17px;
+    margin-top: -17px;
 }
 .ui-icon-material-share:after {
     background-image: url("images/custom-svg/material-share.svg");
-    height: 24px;
-    width: 24px;
-    margin-left: -12px;
-    margin-top: -12px;
+    background-size: 30px 30px;
+    height: 30px;
+    width: 30px;
+    margin-left: -15px;
+    margin-top: -15px;
 }
 .ui-icon-material-video:after {
     background-image: url("images/custom-svg/material-video.svg");
@@ -88,52 +101,65 @@
 /* --- Fallback --- */
 .ui-nosvg .ui-icon-material-camera:after {
     background-image: url("images/custom-png/material-camera.png");
+    background-size: 24px 24px;
     height: 24px;
     width: 24px;
     -webkit-border-radius: 0px;
     border-radius: 0px;
+    margin-left: -12px;
 }
 .ui-nosvg .ui-icon-material-map:after {
     background-image: url("images/custom-png/material-map.png");
+    background-size: 24px 24px;
     height: 24px;
     width: 24px;
     -webkit-border-radius: 0px;
     border-radius: 0px;
+    margin-left: -12px;
 }
 .ui-nosvg .ui-icon-material-folder:after {
     background-image: url("images/custom-png/material-folder.png");
+    background-size: 24px 24px;
     height: 24px;
     width: 24px;
     -webkit-border-radius: 0px;
     border-radius: 0px;
+    margin-left: -12px;
 }
 .ui-nosvg .ui-icon-material-info:after {
     background-image: url("images/custom-png/material-info.png");
+    background-size: 24px 24px;
     height: 24px;
     width: 24px;
     -webkit-border-radius: 0px;
     border-radius: 0px;
+    margin-left: -12px;
 }
 .ui-nosvg .ui-icon-material-delete:after {
     background-image: url("images/custom-png/material-delete.png");
-    height: 24px;
-    width: 24px;
+    background-size: 28px 28px;
+    height: 28px;
+    width: 28px;
     -webkit-border-radius: 0px;
     border-radius: 0px;
+    margin-left: -14px;
+    margin-top: -14px;
 }
 .ui-nosvg .ui-icon-material-clear:after {
     background-image: url("images/custom-png/material-clear.png");
-    height: 24px;
-    width: 24px;
-    margin-left: -12px;
-    margin-top: -12px;
+    background-size: 34px 34px;
+    height: 34px;
+    width: 34px;
+    margin-left: -17px;
+    margin-top: -17px;
 }
 .ui-nosvg .ui-icon-material-share:after {
     background-image: url("images/custom-png/material-share.png");
-    height: 24px;
-    width: 24px;
-    margin-left: -12px;
-    margin-top: -12px;
+    background-size: 30px 30px;
+    height: 30px;
+    width: 30px;
+    margin-left: -15px;
+    margin-top: -15px;
 }
 .ui-nosvg .ui-icon-material-video:after {
     background-image: url("images/custom-png/material-video.png");
@@ -166,9 +192,10 @@ html body #camera {
     background-color: transparent;
 } 
 
-#camera .record-btn {
+#camera #startRecording {
     position: fixed;
     background-color: #d50000;
+    -webkit-border-radius: 100%;
     border-radius: 100%;
     border-color: #af0202;
     height: 120px;
@@ -178,9 +205,10 @@ html body #camera {
     margin-bottom: 2%;
 }
 
-#camera .poi-btn {
+#camera #addPOI {
     position: fixed;
     background-color: #3184FF;
+    -webkit-border-radius: 100%;
     border-radius: 100%;
     border-color: #2565c5;
     height: 75px;
@@ -244,17 +272,37 @@ html body #camera {
 
 
 /* --- File Viewer --- */
-/*Needs more formatting to be in the centre*/
-#fileview-header .ui-btn-icon-notext {
+#fileview-header #back {
     background-color: transparent;
+    border-color: transparent;
+    position: absolute;
     -webkit-border-radius: 0px;
     border-radius: 0px;
+    width: 2.2em;
+    height: 2.2em;
+}
+
+#fileview-header #share {
+    background-color: transparent;
+    border-color: transparent;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    width: 2.2em;
+    height: 2.2em;
+}
+
+#fileview #header-title {
+    margin: 0 15%;
 }
 
 #video {
+    position: absolute;
     height: 100%;
     width: 100%;
-    position: absolute;
+    background-color: #000000; 
+    object-fit: fill;
+
+    /* Fill seems like better choice - needs test */
 }
 
 /* --- Info Page --- */

@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dash Camera</title>
+    <title>Dash Cam!</title>
 
     <!-- APPLE SETTINGS-->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="format-detection" content="telephone=no">
 
-    <!--You need this although you do not need a physical reference as build will inject it in-->
+    <!--Injected by PGB -->
     <script type="text/javascript" src="cordova.js"></script>
 
     <!-- CSS -->
@@ -24,10 +24,8 @@
     <!-- Camera Page -->
     <div data-role="page" id="camera" data-title="Camera" data-theme="b">
         <div data-role="content">
-            <div >
-                <a href="" id="startRecording" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-material-video ui-nodisc-icon record-btn"></a>
-                <a href="" id="addPOI" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-material-addPOI ui-nodisc-icon poi-btn"></a>
-            </div>
+            <a href="" id="startRecording" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-material-video ui-nodisc-icon"></a>
+            <a href="" id="addPOI" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-material-addPOI ui-nodisc-icon"></a>
         </div>
     </div>
 
@@ -60,11 +58,11 @@
     <div data-role="page" id="fileview" data-title="File View" data-theme="b">
         <div data-role="header" id="fileview-header">
             <div class="ui-btn-left">
-                    <a href="#files" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-material-clear ui-nodisc-icon"></a>
+                    <a href="#files" id="back" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-material-clear ui-nodisc-icon"></a>
             </div>
             <h3 id="header-title">File Viewer</h3>
             <div class="ui-btn-right">
-                    <a href="#" id="share" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-material-share ui-nodisc-icon"></a>
+                    <a href="" id="share" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-material-share ui-nodisc-icon"></a>
             </div>
         </div>
         <div data-role="content" class="no-padding">
@@ -98,7 +96,7 @@
                     <li>Swap insurance details with the other drivers.</li>
                     <li>Get the contact information of any witnesses.</li>
                 </ul>
-                <h3>What Information do I Collect?:</h3>
+                <h3>What Information do I Collect?</h3>
                 <ul>
                     <li>Make, model, colour and number plate of all vehicles involved.</li>
                     <li>Time and date of the crash.</li>

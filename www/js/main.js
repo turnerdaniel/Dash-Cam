@@ -22,7 +22,8 @@ var shareOptions;
 //Change POI icons
 //offline screen
 //gesture tutorial + notice about geofence
-//Remaining Aesthetics (File viewer centre buttons/black around video/blue glow)
+//Remaining Aesthetics (blue glow)
+//icon png sizes may be too small
 //disallow overscroll
 //Refactoring & commenting
 //what if no camera permission?
