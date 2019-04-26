@@ -26,6 +26,7 @@ var shareOptions;
 //Remaining Aesthetics (File viewer centre buttons/camera buttons/black around video/blue glow)
 //disallow overscroll
 //Refactoring & commenting
+//what if no camera permission?
 
 //--- @ end
 //Photoshop the notification and show example of notification sound
@@ -37,7 +38,8 @@ document.addEventListener('deviceready', function () {
 
     initNav();
 
-
+    initCameraPreview();
+    $(document).on('pagebeforeshow', '#camera', initCameraPreview);
 }, false);
 
 $(document).ready(function () {
@@ -211,7 +213,10 @@ $(document).on('pageinit', '#camera', function() {
     }
 
     $('#testVideoJSON').click(function() {
-        getGeofences();
+
+        console.log("still works :)");
+
+        //getGeofences();
         //updateVideoLocalStorage(mediaFiles);
         //localStorage.setItem("Videos", '[{"name":"VID_20190420_135427.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}, {"name":"VID_20190420_135428.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}, {"name":"VID_20190420_135429.mp4","localURL":"cdvfile://localhost/sdcard/DCIM/Camera/VID_20190420_135427.mp4","type":"video/mp4","lastModified":null,"lastModifiedDate":1555764867000,"size":13294146,"start":0,"end":0,"fullPath":"file:///storage/emulated/0/DCIM/Camera/VID_20190420_135427.mp4"}]');
     });
@@ -225,6 +230,8 @@ function updateVideoLocalStorage(videoArray) {
 
 function initCameraPreview() {
 
+    $('body').css('background-color', 'transparent');
+
     var options = {
         width: window.screen.width,
         height: window.screen.height,
@@ -232,28 +239,10 @@ function initCameraPreview() {
         toBack: true,
         tapPhoto: false,
         tapFocus: false
-    }
+    };
 
     CameraPreview.startCamera(options);
 }
-
-$(document).on('pagebeforeshow', '#camera', function() {
-    console.log("camera shown");
-    //make camera always transparent and then just alter body :)
-    $('body').css('background-color', 'transparent');
-
-    //May need to change to page show or later - more testing...
-    //if not, I can do flag using init
-
-    //console.log("Set Height", screenHeight, "-", navbarHeight, "=", adjustedHeight);
-    //console.log("Current Height", $.mobile.getScreenHeight() - ($("[data-role='footer']").outerHeight() - 1));
-
-    if (window.cordova) {
-        if (device.platform == "Android" || device.platform == "iOS") {
-            initCameraPreview();
-        }
-    }
-});
 
 $(document).on('pagebeforehide', '#camera', function() {
     $('body').css('background-color', '#48626d');

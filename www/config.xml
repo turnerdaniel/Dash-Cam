@@ -63,7 +63,7 @@
     <!-- Platform Manifest Changes -->
     <!-- Media Capture-->
 	<edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
-        <string>We need camera access to take videos of events infront of the device.</string>
+        <string>We need camera access to take videos of events in front of the device.</string>
     </edit-config>
     <edit-config target="NSMicrophoneUsageDescription" file="*-Info.plist" mode="merge">
         <string>We need microphone access to record sounds in the videos.</string>
@@ -79,7 +79,7 @@
     <!-- Third party plugins -->
     <plugin name="cordova-plugin-android-permissions" spec="1" source="npm" />
     <plugin name="cordova-plugin-x-socialsharing" spec="5.4.4" source="npm" />
-    <platform name="android"> <!-- Cordova cli 8.0.0 requires swift >3.0 (this is 2.3) -->
+    <platform name="android"> <!-- Cordova cli 8.0.0 for iOS requires swift >3.0 (this is 2.3) -->
         <plugin name="cordova-plugin-geofence" spec="0.7.0" source="npm" />
     </platform>
     <plugin spec="https://github.com/cordova-plugin-camera-preview/cordova-plugin-camera-preview.git#e417df8" source="git" />
