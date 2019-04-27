@@ -383,6 +383,28 @@ html body #camera {
     background-color: #80a7bb;
 }
 
+#files #message-container {
+    display: none;
+}
+
+#files #message-wrapper {
+    position: fixed;
+    top: 0px;
+    height: 95%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: auto 0;
+}
+
+#files #empty-message {
+    text-align: center;
+    color: #FFFFFF;
+    margin: 0px;
+}
+
 /* --- File Viewer --- */
 #fileview-header #back {
     background-color: transparent;

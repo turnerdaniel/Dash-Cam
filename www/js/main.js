@@ -20,8 +20,7 @@ var shareOptions;
 
 //TODO:
 //offline screen
-//gesture tutorial + notice about geofence
-//nothing shown on the files page text
+//nothing shown on the files page text !!
 //Change POI icons
 //App Icon
 //Refactoring & commenting & Remove stuff from config.xml 
@@ -532,6 +531,8 @@ $(document).on('pagebeforeshow', '#files', function() {
         checkNumberOfFiles();
     }
 
+    displayEmptyMessage();
+
     var content = '';
     if (mediaFiles) {
         for (var i = 0; i < mediaFiles.length; i++) {
@@ -578,9 +579,9 @@ $(document).on('pagebeforeshow', '#files', function() {
             var path = $(this).data("filepath");
             $(this).parent().remove();
 
-
             deleteFile(path);
             removeMediaFile(name);
+            displayEmptyMessage();
         });
     }
 });
@@ -602,15 +603,16 @@ function deleteFile(filepath) {
         filepath = "file://" + filepath;
     }
 
-    window.resolveLocalFileSystemURL(filepath, function(file) {
+    if (window.cordova) {
+        window.resolveLocalFileSystemURL(filepath, function (file) {
             if (device.platform == "Android") {
                 var permissions = cordova.plugins.permissions;
 
                 permissions.requestPermission(permissions.WRITE_EXTERNAL_STORAGE, function () {
-                        console.log('File write permission granted');
-                        del(file);
-                    }, 
-                    function() {
+                    console.log('File write permission granted');
+                    del(file);
+                },
+                    function () {
                         console.log('File write permission denied');
                     }
                 );
@@ -618,11 +620,12 @@ function deleteFile(filepath) {
                 del(file);
             }
         },
-        function(error) {
-            console.log("Couldn't resolve File", error);
-        }
-    );
-
+            function (error) {
+                console.log("Couldn't resolve File", error);
+            }
+        );
+    }
+    
     function del(fileObj) {
         fileObj.remove(function() {
             console.log("File removed");
@@ -651,6 +654,18 @@ function checkNumberOfFiles() {
                 removeMediaFile(name);
             }
         }
+    }
+}
+
+function displayEmptyMessage() {
+    if (mediaFiles) {
+        if (mediaFiles.length == 0) {
+            $('#message-container').fadeIn('fast');
+        } else {
+            $('#message-container').hide();
+        }
+    } else {
+        $('#message-container').show();
     }
 }
 
