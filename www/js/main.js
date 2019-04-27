@@ -20,7 +20,6 @@ var shareOptions;
 
 //TODO:
 //offline screen
-//nothing shown on the files page text !!
 //Change POI icons
 //App Icon
 //Refactoring & commenting & Remove stuff from config.xml 

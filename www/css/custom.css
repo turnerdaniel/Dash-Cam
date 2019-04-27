@@ -406,6 +406,10 @@ html body #camera {
 }
 
 /* --- File Viewer --- */
+#fileview #fileview-header {
+    background-color: #34464e;
+}
+
 #fileview-header #back {
     background-color: transparent;
     border-color: transparent;
@@ -416,6 +420,15 @@ html body #camera {
     height: 2.2em;
 }
 
+#fileview-header #back:active {
+    background-color: #48626d;
+}
+
+#fileview-header #back:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
 #fileview-header #share {
     background-color: transparent;
     border-color: transparent;
@@ -423,6 +436,15 @@ html body #camera {
     border-radius: 0px;
     width: 2.2em;
     height: 2.2em;
+}
+
+#fileview-header #share:active {
+    background-color: #48626d;
+}
+
+#fileview-header #share:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 #fileview #header-title {
