@@ -21,11 +21,10 @@ var shareOptions;
 //TODO:
 //offline screen
 //Change POI icons
-//App Icon
-//Refactoring & commenting & Remove stuff from config.xml 
+//Refactoring & commenting
 
 //--- @ end
-//Photoshop the notification and show example of notification sound
+//show example of notification sound in demo
 
 document.addEventListener('deviceready', function () {
     console.log('PhoneGap Ready!');

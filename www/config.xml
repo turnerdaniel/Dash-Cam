@@ -39,12 +39,9 @@
 	
     <!-- Core plugins -->
     <plugin name="cordova-plugin-media-capture" />          <!-- Record Videos and Save Locally -->
-    <plugin name="cordova-plugin-console" />                <!-- NEEDS TESTING -->
     <plugin name="cordova-plugin-device" />                 <!-- Identify device platform -->
     <plugin name="cordova-plugin-dialogs" />                <!-- Produce device-specific dialogs -->
-	<plugin name="cordova-plugin-vibration" />              <!-- REMOVE ME -->
     <plugin name="cordova-plugin-geolocation" />            <!-- Identify user position -->
-    <plugin name="cordova-plugin-inappbrowser" />           <!-- REMOVE - NEEDS TESTING -->
     <plugin name="cordova-plugin-file" />                   <!-- File Resolve and Deletion -->
     <plugin name="cordova-plugin-network-information" />    <!-- Check network status -->
     <plugin name="cordova-plugin-splashscreen" />           <!-- Show splash screen on launch -->
