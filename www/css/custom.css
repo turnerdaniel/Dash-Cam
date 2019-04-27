@@ -321,7 +321,8 @@ html body #camera {
 #tutorial p {
     color: #000000;
     text-align: center;
-    text-shadow: none;
+    text-shadow: 0px 0px 3px #ffffff;
+    font-size: 4vw;
 }
 
 #tutorial img {
@@ -331,6 +332,16 @@ html body #camera {
 
 #tutorial #tutorial-okay {
     width: auto;
+    font-size: 4vw;
+}
+
+#tutorial #tutorial-okay:active {
+    background-color: #48626d;
+}
+
+#tutorial #tutorial-okay:focus {
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
 /* --- Files Page --- */

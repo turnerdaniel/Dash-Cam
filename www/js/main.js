@@ -265,6 +265,7 @@ $(document).on('pageinit', '#maps', function() {
     ); 
 
     initMapButtons();
+    initTutorial();
 
     navigator.geolocation.getCurrentPosition(locationSuccess, locationFailure, {
         enableHighAccuracy: true,
@@ -320,6 +321,25 @@ $(document).on('pageinit', '#maps', function() {
 function initMapButtons() {
     var navbarHeight = $("[data-role='footer']").outerHeight() - 1;
     $('#my-location').css('bottom', navbarHeight);
+}
+
+function initTutorial() {
+    if (localStorage && localStorage.getItem('Tutorial')) {
+        var needShow = localStorage.getItem('Tutorial');
+        if (needShow == "true") {
+            $('#tutorial').show();
+        }
+    } else {
+        $('#tutorial').show();
+    }
+
+    $('#tutorial-okay').click(function() {
+        $('#tutorial').fadeOut('fast');
+
+        if(localStorage) {
+            localStorage.setItem('Tutorial', "false");
+        }
+    });
 }
 
 function updateMarkerLocalStorage(markerArray) {
@@ -391,48 +411,42 @@ function addMarker (latitude, longitude, map, singleInit = true) {
 }
 
 function addGeofence(id, lat, lng) {
-    if (device.platform == "Android") {
-        //Dont need to initialise
-        window.geofence.addOrUpdate({
-            id: id,
-            latitude: lat,
-            longitude: lng,
-            radius: 1000,
-            transitionType: TransitionType.ENTER,
-            notification: {
-                title: "Dash Cam!",
-                text: "You are getting close to a marked location. Watch out!",
-                openAppOnClick: true
-            }
-        }).then(function() {
-            console.log("Geofence success");
-        },
-        function (error) {
-            console.log("Geofence fail", error);
-        });
+    if (window.cordova) {
+        if (device.platform == "Android") {
+            //Dont need to initialise
+            window.geofence.addOrUpdate({
+                id: id,
+                latitude: lat,
+                longitude: lng,
+                radius: 1000,
+                transitionType: TransitionType.ENTER,
+                notification: {
+                    title: "Dash Cam!",
+                    text: "You are getting close to a marked location. Watch out!",
+                    openAppOnClick: true
+                }
+            }).then(function () {
+                console.log("Geofence success");
+            },
+                function (error) {
+                    console.log("Geofence fail", error);
+                });
+        }
     }
 }
 
 function removeGeofence(id) {
-    if (device.platform =="Android") {
-        window.geofence.remove(id).then(
-            function() {
-                console.log('Geofence sucessfully removed');
-            }, 
-            function(error) {
-                console.log('Removing geofence failed', error);
-            }
-        );   
-    }
-}
-
-function getGeofences() {
-    if (device.platform == "Android") {
-
-        window.geofence.getWatched().then(function (geofencesJson) {
-            var geofences = JSON.parse(geofencesJson);
-            console.log(geofences);
-        });
+    if (window.cordova) {
+        if (device.platform == "Android") {
+            window.geofence.remove(id).then(
+                function () {
+                    console.log('Geofence sucessfully removed');
+                },
+                function (error) {
+                    console.log('Removing geofence failed', error);
+                }
+            );
+        }
     }
 }
 
@@ -511,8 +525,6 @@ $(document).on("pagecontainerchange", function () {
 
 $(document).on('pagebeforeshow', '#files', function() {
     console.log('before files shown');
-
-    //need to remove files over 10 in length
 
     if (localStorage && localStorage.getItem('Videos')) {
         mediaFiles = JSON.parse(localStorage.getItem("Videos"));
