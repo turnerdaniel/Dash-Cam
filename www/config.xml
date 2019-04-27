@@ -14,16 +14,10 @@
         Daniel Turner
     </author>
 	
-	<!--
-        If you do not want any permissions to be added to your app, add the
-        following tag to your config.xml; you will still have the INTERNET
-        permission on your app, which PhoneGap requires.
-    -->
-	<preference name="keepRunning" 				  value="false" />
-	<preference name="AllowInlineMediaPlayback"   value="true"/>
-    <preference name="permissions"                value="none"/>
-
-    <!-- Customize your app and platform with the preference element. -->
+	<!-- Preferences -->
+	<preference name="KeepRunning" 				  value="false" />          <!-- android: halt JS execution on pause -->
+	<preference name="AllowInlineMediaPlayback"   value="true"/>            <!-- ios: allow html5 video playsinline tag -->
+    <preference name="permissions"                value="none"/>            <!-- all: permissions defined at runtime -->
     <preference name="orientation"                value="portrait" />       <!-- all: default means both landscape and portrait are enabled -->
     <preference name="target-device"              value="universal" />      <!-- all: possible values handset, tablet, or universal -->
     <preference name="fullscreen"                 value="true" />           <!-- all: hides the status bar at the top of the screen -->
@@ -37,24 +31,23 @@
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
 	<preference name="SplashScreenDelay"          value="3000" />           <!-- all: amount of time splash screen is displayed in ms -->
     <preference name="ShowSplashScreenSpinner"    value="false"/>           <!-- all: if set to false, the spinner won't appear on the splash screen during app loading -->
-    <preference name="AutoHideSplashScreen"       value="true" />           <!-- ios: if set to false, the splash screen must be hidden using JS -->
+    <preference name="AutoHideSplashScreen"       value="true" />           <!-- all: if set to false, the splash screen must be hidden using JS -->
 
-    <!-- Define a specific version of PhoneGap to build into your app. -->
-    <preference name="phonegap-version"           value="cli-8.0.0" />
-    <preference name="android-minSdkVersion"      value="19" /> <!-- Needed for MAPS SDK -->
-    <!-- Plugins -->
+    <!-- Build Preferences -->
+    <preference name="phonegap-version"           value="cli-8.0.0" /> <!-- Allows for Android 7.0.0 & iOS 4.5.4 -->
+    <preference name="android-minSdkVersion"      value="19" /> <!-- Some Plugins dont play nice with Android < 4.4 -->
 	
     <!-- Core plugins -->
-    <plugin name="cordova-plugin-media-capture" />
-    <plugin name="cordova-plugin-console" />
-    <plugin name="cordova-plugin-device" />
-    <plugin name="cordova-plugin-dialogs" />
-	<plugin name="cordova-plugin-vibration" />
-    <plugin name="cordova-plugin-geolocation" />
-    <plugin name="cordova-plugin-inappbrowser" />
-    <plugin name="cordova-plugin-file" /> <!--File Resolve -->
-    <plugin name="cordova-plugin-network-information" />
-    <plugin name="cordova-plugin-splashscreen" />
+    <plugin name="cordova-plugin-media-capture" />          <!-- Record Videos and Save Locally -->
+    <plugin name="cordova-plugin-console" />                <!-- NEEDS TESTING -->
+    <plugin name="cordova-plugin-device" />                 <!-- Identify device platform -->
+    <plugin name="cordova-plugin-dialogs" />                <!-- Produce device-specific dialogs -->
+	<plugin name="cordova-plugin-vibration" />              <!-- REMOVE ME -->
+    <plugin name="cordova-plugin-geolocation" />            <!-- Identify user position -->
+    <plugin name="cordova-plugin-inappbrowser" />           <!-- REMOVE - NEEDS TESTING -->
+    <plugin name="cordova-plugin-file" />                   <!-- File Resolve and Deletion -->
+    <plugin name="cordova-plugin-network-information" />    <!-- Check network status -->
+    <plugin name="cordova-plugin-splashscreen" />           <!-- Show splash screen on launch -->
 
     <!-- Platform Manifest Changes -->
     <!-- Media Capture-->
@@ -73,18 +66,14 @@
     </edit-config>
 
     <!-- Third party plugins -->
-    <plugin name="cordova-plugin-android-permissions" spec="1" source="npm" />
-    <plugin name="cordova-plugin-x-socialsharing" spec="5.4.4" source="npm" />
+    <plugin name="cordova-plugin-android-permissions" spec="1" source="npm" /> <!-- Ask for permission manually for file view/deletion -->
+    <plugin name="cordova-plugin-x-socialsharing" spec="5.4.4" source="npm" /> <!-- Native share menu -->
     <platform name="android"> <!-- Cordova cli 8.0.0 for iOS requires swift >3.0 (this is 2.3) -->
-        <plugin name="cordova-plugin-geofence" spec="0.7.0" source="npm" />
+        <plugin name="cordova-plugin-geofence" spec="0.7.0" source="npm" /> <!-- Send notification on geofence (works below Android 7) -->
     </platform>
-    <plugin spec="https://github.com/cordova-plugin-camera-preview/cordova-plugin-camera-preview.git#e417df8" source="git" />
+    <plugin spec="https://github.com/cordova-plugin-camera-preview/cordova-plugin-camera-preview.git#e417df8" source="git" /> <!-- Show camera in HTML -->
 
-
-	<!--these are generic not good enough for a live build - you will need to be os and device specific (android can use 9 slice png)-->
-	<!-- <icon src="icon.png" /> -->
-	<!-- <splash src="splash.png" /> -->
-
+    <!-- Icons and Splash Screen -->
     <platform name="android">
         <preference name="SplashMaintainAspectRatio" value="true" />
         <preference name="SplashShowOnlyFirstTime" value="true" />
@@ -148,11 +137,11 @@
         <splash src="assets/screen/ios/Default@2x~ipad~comany.png" />
     </platform>
 
-    <!-- Added the following intents to support the removal of whitelist code from base cordova to a plugin -->
-    <!-- Whitelist configuration. Refer to https://cordova.apache.org/docs/en/edge/guide_appdev_whitelist_index.md.html -->
+    <!-- Whitelist configuration -->
     <plugin name="cordova-plugin-whitelist" version="1" />
-    <!-- This allows your app to load assets from all *.phongap.com domains -->
+    <!-- This allows your app to load assets from all domains -->
 	<access origin="*" />
+    <!-- Allow common href queries -->
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
