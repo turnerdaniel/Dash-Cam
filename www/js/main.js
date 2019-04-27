@@ -21,11 +21,10 @@ var shareOptions;
 //TODO:
 //offline screen
 //gesture tutorial + notice about geofence
-//my location button
+//nothing shown on the files page text
 //Change POI icons
 //App Icon
-//Refactoring & commenting & Remve stuff from config.xml 
-//what if no camera permission?
+//Refactoring & commenting & Remove stuff from config.xml 
 
 //--- @ end
 //Photoshop the notification and show example of notification sound
@@ -263,7 +262,9 @@ $(document).on('pageinit', '#maps', function() {
         disableDefaultUI: true,
         clickableIcons: false
         }   
-    );
+    ); 
+
+    initMapButtons();
 
     navigator.geolocation.getCurrentPosition(locationSuccess, locationFailure, {
         enableHighAccuracy: true,
@@ -307,7 +308,19 @@ $(document).on('pageinit', '#maps', function() {
         console.log('map clicked');
         addMarker(position.latLng.lat(), position.latLng.lng(), map);
     });
+
+    $('#my-location').click(function() {
+        if (currentLocation) {
+            map.setZoom(11);
+            map.panTo(currentLocation.position);
+        }
+    });
 });
+
+function initMapButtons() {
+    var navbarHeight = $("[data-role='footer']").outerHeight() - 1;
+    $('#my-location').css('bottom', navbarHeight);
+}
 
 function updateMarkerLocalStorage(markerArray) {
     if (localStorage) {
