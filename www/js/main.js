@@ -276,7 +276,7 @@ $(document).on('pageinit', '#maps', function() {
         map.panTo(centre);
 
         var icon = {
-            url: "assets/icons/curr_location.png",
+            url: "assets/img/curr_location.png",
             scaledSize: new google.maps.Size(15, 15), 
             origin: new google.maps.Point(0, 0), 
             anchor: new google.maps.Point(7.5, 7.5) 

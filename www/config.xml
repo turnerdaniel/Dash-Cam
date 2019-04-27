@@ -24,29 +24,25 @@
     <preference name="permissions"                value="none"/>
 
     <!-- Customize your app and platform with the preference element. -->
-    <preference name="orientation"                value="portrait" />        <!-- all: default means both landscape and portrait are enabled -->
+    <preference name="orientation"                value="portrait" />       <!-- all: default means both landscape and portrait are enabled -->
     <preference name="target-device"              value="universal" />      <!-- all: possible values handset, tablet, or universal -->
     <preference name="fullscreen"                 value="true" />           <!-- all: hides the status bar at the top of the screen -->
-    <preference name="DisallowOverscroll"         value="true" />           <!--ios: control whether the screen 'bounces' when scrolled beyond the top -->
+    <preference name="DisallowOverscroll"         value="true" />           <!-- ios: control whether the screen 'bounces' when scrolled beyond the top -->
     <preference name="prerendered-icon"           value="true" />           <!-- ios: if icon is prerendered, iOS will not apply it's gloss to the app's icon on the user's home screen -->
-    <preference name="stay-in-webview"            value="true" />          <!-- ios: external links should open in the default browser, 'true' would use the webview the app lives in -->
+    <preference name="stay-in-webview"            value="true" />           <!-- ios: external links should open in the default browser, 'true' would use the webview the app lives in -->
     <preference name="ios-statusbarstyle"         value="black-opaque" />   <!-- ios: black-translucent will appear black because the PhoneGap webview doesn't go beneath the status bar -->
     <preference name="detect-data-types"          value="true" />           <!-- ios: controls whether data types (such as phone no. and dates) are automatically turned into links by the system -->
-    <preference name="exit-on-suspend"            value="true" />          <!-- ios: if set to true, app will terminate when home button is pressed -->
-    <preference name="show-splash-screen-spinner" value="true" />           <!-- ios: if set to false, the spinner won't appear on the splash screen during app loading -->
-    <preference name="auto-hide-splash-screen"    value="true" />           <!-- ios: if set to false, the splash screen must be hidden using a JavaScript API -->
+    <preference name="exit-on-suspend"            value="true" />           <!-- ios: if set to true, app will terminate when home button is pressed -->          
     <preference name="disable-cursor"             value="false" />          <!-- blackberry: prevents a mouse-icon/cursor from being displayed on the app -->
     <preference name="android-installLocation"    value="auto" />           <!-- android: app install location. 'auto' will choose. 'internalOnly' is device memory. 'preferExternal' is SDCard. -->
-	<preference name="splash-screen-delay" 		  value="5000" />
-
+	<preference name="SplashScreenDelay"          value="3000" />           <!-- all: amount of time splash screen is displayed in ms -->
+    <preference name="ShowSplashScreenSpinner"    value="false"/>           <!-- all: if set to false, the spinner won't appear on the splash screen during app loading -->
+    <preference name="AutoHideSplashScreen"       value="true" />           <!-- ios: if set to false, the splash screen must be hidden using JS -->
 
     <!-- Define a specific version of PhoneGap to build into your app. -->
     <preference name="phonegap-version"           value="cli-8.0.0" />
-    <preference name="android-minSdkVersion" value="19" /> <!-- Needed for MAPS SDK -->
+    <preference name="android-minSdkVersion"      value="19" /> <!-- Needed for MAPS SDK -->
     <!-- Plugins -->
-
-    <!-- Core plugins 
-	NOTE THAT ONLY IMPORT WHAT YOU NEED - IOS 10 HAS ADDITIONAL SECURITY FEATURES WHICH HINDER GETTING IT ONTO THE APP STORE -->
 	
     <!-- Core plugins -->
     <plugin name="cordova-plugin-media-capture" />
@@ -58,6 +54,7 @@
     <plugin name="cordova-plugin-inappbrowser" />
     <plugin name="cordova-plugin-file" /> <!--File Resolve -->
     <plugin name="cordova-plugin-network-information" />
+    <plugin name="cordova-plugin-splashscreen" />
 
     <!-- Platform Manifest Changes -->
     <!-- Media Capture-->
@@ -85,8 +82,71 @@
 
 
 	<!--these are generic not good enough for a live build - you will need to be os and device specific (android can use 9 slice png)-->
-	<icon src="icon.png" />
-	<splash src="splash.png" />
+	<!-- <icon src="icon.png" /> -->
+	<!-- <splash src="splash.png" /> -->
+
+    <platform name="android">
+        <preference name="SplashMaintainAspectRatio" value="true" />
+        <preference name="SplashShowOnlyFirstTime" value="true" />
+
+        <!--Standard Icons -->
+        <icon src="assets/icons/android/ldpi.png" density="ldpi" />
+        <icon src="assets/icons/android/mdpi.png" density="mdpi" />
+        <icon src="assets/icons/android/hdpi.png" density="hdpi" />
+        <icon src="assets/icons/android/xhdpi.png" density="xhdpi" />
+        <icon src="assets/icons/android/xxhdpi.png" density="xxhdpi" />
+        <icon src="assets/icons/android/xxxhdpi.png" density="xxxhdpi" />
+
+        <!-- Portrait Splash Screen -->
+        <splash src="assets/screen/android/splash-port-ldpi.png" density="port-ldpi" />
+        <splash src="assets/screen/android/splash-port-mdpi.png" density="port-mdpi" />
+        <splash src="assets/screen/android/splash-port-hdpi.png" density="port-hdpi" />
+        <splash src="assets/screen/android/splash-port-xhdpi.png" density="port-xhdpi" />
+        <splash src="assets/screen/android/splash-port-xxhdpi.png" density="port-xxhdpi" />
+        <splash src="assets/screen/android/splash-port-xxxhdpi.png" density="port-xxxhdpi" />
+    </platform>
+
+    <platform name="ios">
+        <!-- iOS 8.0+ -->
+        <!-- iPhone 6 Plus  -->
+        <icon src="assets/icons/ios/icon-60@3x.png" width="180" height="180" />
+        <!-- iOS 7.0+ -->
+        <!-- iPhone / iPod Touch  -->
+        <icon src="assets/icons/ios/icon-60.png" width="60" height="60" />
+        <icon src="assets/icons/ios/icon-60@2x.png" width="120" height="120" />
+        <!-- iPad -->
+        <icon src="assets/icons/ios/icon-76.png" width="76" height="76" />
+        <icon src="assets/icons/ios/icon-76@2x.png" width="152" height="152" />
+        <!-- Spotlight Icon -->
+        <icon src="assets/icons/ios/icon-40.png" width="40" height="40" />
+        <icon src="assets/icons/ios/icon-40@2x.png" width="80" height="80" />
+        <!-- iOS 6.1 -->
+        <!-- iPhone / iPod Touch -->
+        <icon src="assets/icons/ios/icon.png" width="57" height="57" />
+        <icon src="assets/icons/ios/icon@2x.png" width="114" height="114" />
+        <!-- iPad -->
+        <icon src="assets/icons/ios/icon-72.png" width="72" height="72" />
+        <icon src="assets/icons/ios/icon-72@2x.png" width="144" height="144" />
+        <!-- iPad Pro -->
+        <icon src="assets/icons/ios/icon-167.png" width="167" height="167" />
+        <!-- iPhone Spotlight and Settings Icon -->
+        <icon src="assets/icons/ios/icon-small.png" width="29" height="29" />
+        <icon src="assets/icons/ios/icon-small@2x.png" width="58" height="58" />
+        <icon src="assets/icons/ios/icon-small@3x.png" width="87" height="87" />
+        <!-- iPad Spotlight and Settings Icon -->
+        <icon src="assets/icons/ios/icon-50.png" width="50" height="50" />
+        <icon src="assets/icons/ios/icon-50@2x.png" width="100" height="100" />
+        <!-- iPad Pro -->
+        <icon src="assets/icons/ios/icon-83.5@2x.png" width="167" height="167" />
+
+        <!-- Storyboard Portrait -->
+        <splash src="assets/screen/ios/Default@2x~iphone~anyany.png" />
+        <splash src="assets/screen/ios/Default@2x~iphone~comany.png" />
+        <splash src="assets/screen/ios/Default@3x~iphone~anyany.png" />
+        <splash src="assets/screen/ios/Default@3x~iphone~comany.png" />
+        <splash src="assets/screen/ios/Default@2x~ipad~anyany.png" />
+        <splash src="assets/screen/ios/Default@2x~ipad~comany.png" />
+    </platform>
 
     <!-- Added the following intents to support the removal of whitelist code from base cordova to a plugin -->
     <!-- Whitelist configuration. Refer to https://cordova.apache.org/docs/en/edge/guide_appdev_whitelist_index.md.html -->
