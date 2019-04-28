@@ -195,25 +195,28 @@
 }
 
 /* --- All --- */
-html body {
+/* Set Default Font */
+html body { 
     font-family: 'Open Sans', sans-serif;
 }
-
-.no-padding {
+/* Remove padding from content */
+.no-padding {   
     padding: 0px;
 }
 
 /* --- Navigation Bar --- */
+/* Remove outer glow on focus */
 html body #nav .ui-btn:focus {
     -webkit-box-shadow: none;
     box-shadow: none;
 }
 
 /* --- Camera Page --- */
+/* Camera Preview is put at back of HTML so this is required */
 html body #camera {
     background-color: transparent;
 } 
-
+/* Camera Record button */
 #camera #startRecording {
     position: fixed;
     background-color: #d50000;
@@ -222,20 +225,20 @@ html body #camera {
     border-color: #af0202;
     height: 120px;
     width: 120px;
-    left: calc(50% - 60px);
-    bottom: 0px;
+    left: calc(50% - 60px); /* Centre position */
+    bottom: 0px; /* Adjusted by JS */
     margin-bottom: 2%;
 }
-
+/* Provide click feedback */
 #camera #startRecording:active {
     background-color: #af0202;
 }
-
-#camera #startRecording:focus {
+/* Remove outer glow on focus */
+#camera #startRecording:focus { 
     -webkit-box-shadow: none;
     box-shadow: none;
 }
-
+/* Add POI Button */
 #camera #addPOI {
     position: fixed;
     background-color: #3184FF;
@@ -244,28 +247,28 @@ html body #camera {
     border-color: #2565c5;
     height: 75px;
     width: 75px;
-    right: 0px;
-    bottom: 0px;
+    right: 0px; 
+    bottom: 0px; /* Adjusted by JS */
     margin-right: 2%;
     margin-bottom: 2%;
 }
-
+/* Provide click feedback */
 #camera #addPOI:active {
     background-color: #2565c5;
 }
-
-#camera #addPOI:focus {
-    /* Remove blue glow on focus */
+/* Remove outer glow on focus */
+#camera #addPOI:focus { 
     -webkit-box-shadow: none;
     box-shadow: none;
 }
 
 /* --- Map Page --- */
+/* Google Maps Element */
 #gmap {
-    height: 100vh;
+    height: 100vh; /* Doesn't like % */
     width: 100%;
 }
-
+/* Current Location button */
 #my-location {
     position: fixed;
     background-color: #ffffff;
@@ -279,17 +282,16 @@ html body #camera {
     margin-right: 2%;
     margin-bottom: 4%;
 }
-
+/* Provide click feedback */
 #my-location:active {
     background-color: #b6b6b6;
 }
-
-#my-location:focus {
-    /* Remove blue glow on focus */
+/* Remove outer glow on focus */
+#my-location:focus { 
     -webkit-box-shadow: none;
     box-shadow: none;
 }
-
+/* Tutorial Page */
 #tutorial {
     position: fixed; 
     display: none; /* Hide by default */
@@ -300,7 +302,7 @@ html body #camera {
     background-color: rgba(129, 212, 250, 0.4); 
     z-index: 2; 
 }
-
+/* Centre Vertically */
 .outer-wrapper {
     height: 95%;
     display: flex;
@@ -309,7 +311,7 @@ html body #camera {
     align-items: center;
     margin: auto 0;
 }
-
+/* Centre Horizontally */
 .inner-wrapper {
     display: flex;
     flex-direction: column;
@@ -317,33 +319,33 @@ html body #camera {
     align-items: center;
     margin: 0 auto;
 }
-
+/* Make text stand out against BG */
 #tutorial p {
     color: #000000;
     text-align: center;
     text-shadow: 0px 0px 5px #ffffff;
     font-size: 4vw;
 }
-
+/* Define gesture image size */
 #tutorial img {
     height: 7em;
     width: auto;
 }
-
+/* Make button smallest size that fits text */
 #tutorial #tutorial-okay {
     width: auto;
     font-size: 4vw;
 }
-
+/* Provide click feedback */
 #tutorial #tutorial-okay:active {
     background-color: #48626d;
 }
-
-#tutorial #tutorial-okay:focus {
+/* Remove outer glow on focus */
+#tutorial #tutorial-okay:focus { 
     -webkit-box-shadow: none;
     box-shadow: none;
 }
-
+/* Offline page */
 #offline-notice {
     position: fixed; 
     display: none; /* Hide by default */
@@ -354,60 +356,61 @@ html body #camera {
     background-color: #48626d;
     z-index: 3; 
 }
-
+/* Define spinner size */
 #offline-notice img {
     height: 6em;
     width: auto;
 }
-
+/* Centre text */
 #offline-notice p {
     text-align: center;
     font-size: 4vw;
 }
 
 /* --- Files Page --- */
+/* Make list item stand out from BG */
 #files #files_list .play-video {
     background-color: #607d8b;
     border-color: #80a7bb;
     border-right-color: #607d8b;
 }
-
+/* Remove top border on first list element */
 #files #files_list .ui-first-child .play-video {
     border-top-color: #607d8b;
 }
-
-#files #files_list .play-video:focus {
+/* Remove outer glow on focus */
+#files #files_list .play-video:focus { 
     -webkit-box-shadow: none;
     box-shadow: none;
 }
-
+/* Provide click feedback */
 #files #files_list .play-video:active {
     background-color: #80a7bb;
 }
-
+/* Make list item stand out from BG */
 #files #files_list .delete-video {
     background-color: #607d8b;
     border-color: #80a7bb;
     border-left-color: #607d8b;
 }
-
+/* Remove top border from first list element */
 #files #files_list .ui-first-child .delete-video {
     border-top-color: #607d8b;
 }
-
+/* Remove outer glow on focus */
 #files #files_list .delete-video:focus {
     -webkit-box-shadow: none;
     box-shadow: none;
 }
-
+/* Provide click feedback */
 #files #files_list .delete-video:active {
     background-color: #80a7bb;
 }
-
+/* Hide empty messag by default */
 #files #message-container {
     display: none;
 }
-
+/* Centre Vertically */
 #files #message-wrapper {
     position: fixed;
     top: 0px;
@@ -419,7 +422,7 @@ html body #camera {
     align-items: center;
     margin: auto 0;
 }
-
+/* Centre Horizontally */
 #files #empty-message {
     text-align: center;
     color: #FFFFFF;
@@ -427,10 +430,11 @@ html body #camera {
 }
 
 /* --- File Viewer --- */
+/* Set header colour to navbar colour */
 #fileview #fileview-header {
     background-color: #34464e;
 }
-
+/* Enlarge the back button */
 #fileview-header #back {
     background-color: transparent;
     border-color: transparent;
@@ -440,16 +444,16 @@ html body #camera {
     width: 2.2em;
     height: 2.2em;
 }
-
+/* Provide click feedback */
 #fileview-header #back:active {
     background-color: #48626d;
 }
-
-#fileview-header #back:focus {
+/* Remove outer glow on focus */
+#fileview-header #back:focus { 
     -webkit-box-shadow: none;
     box-shadow: none;
 }
-
+/* Enlarge the share button */
 #fileview-header #share {
     background-color: transparent;
     border-color: transparent;
@@ -458,20 +462,20 @@ html body #camera {
     width: 2.2em;
     height: 2.2em;
 }
-
+/* Provide click feedback */
 #fileview-header #share:active {
     background-color: #48626d;
 }
-
-#fileview-header #share:focus {
+/* Remove outer glow on focus */
+#fileview-header #share:focus { 
     -webkit-box-shadow: none;
     box-shadow: none;
 }
-
+/* Enlarge the title */
 #fileview #header-title {
     margin: 0 15%;
 }
-
+/* Make video fill the page */
 #video {
     position: absolute;
     height: 100%;
@@ -481,11 +485,12 @@ html body #camera {
 }
 
 /* --- Info Page --- */
-#info .ui-input-text {
+/*Set BG colour of text box */
+#info .ui-input-text { 
     background-color: #3b5059;
 }
-
-#info .ui-input-clear:focus {
+/* Remove outer glow on focus */
+#info .ui-input-clear:focus { 
     -webkit-box-shadow: none;
     box-shadow: none;
 }
