@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- Meta Data -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dash Cam!</title>
@@ -14,10 +15,10 @@
     <script type="text/javascript" src="cordova.js"></script>
 
     <!-- CSS -->
-    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" />
-    <link rel="stylesheet" href="css/custom-jqm.css" /> <!-- Theme Roller -->
-    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css" /> <!-- Theme Roller -->
-    <link rel="stylesheet" href="css/custom.css" />
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.css" /> <!-- Jquery mobile default CSS styles -->
+    <link rel="stylesheet" href="css/custom-jqm.css" /> <!-- Theme Roller CSS -->
+    <link rel="stylesheet" href="css/jquery.mobile.icons.min.css" /> <!-- Theme Roller Icons CSS -->
+    <link rel="stylesheet" href="css/custom.css" /> <!-- My custom CSS -->
 </head>
 
 <body>
@@ -31,10 +32,12 @@
 
     <!-- Maps Page -->
     <div data-role="page" id="maps" data-title="Maps" data-theme="b">
+            <!-- Google Maps -->
             <div id="gmap"></div>
 
             <a href="" id="my-location" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-material-location ui-nodisc-icon"></a>
 
+            <!-- Tutorial Page -->
             <div id="tutorial">
                 <div class="outer-wrapper">
                     <div class="inner-wrapper">
@@ -47,6 +50,7 @@
                 </div>
             </div>
 
+            <!-- Offline Page -->
             <div id="offline-notice">
                 <div class="outer-wrapper">
                     <div class="inner-wrapper">
@@ -65,6 +69,7 @@
             </ul>
         </div>
 
+        <!-- Message shown when there are no files -->
         <div id="message-container">
             <div id="message-wrapper">
                 <p id="empty-message">Looks like there's nothing here. Try recording some videos!</p>
@@ -83,6 +88,7 @@
                     <a href="" id="share" class="ui-btn ui-corner-all ui-btn-icon-notext ui-icon-material-share ui-nodisc-icon"></a>
             </div>
         </div>
+        <!-- HTML5 Video of recordings -->
         <div data-role="content" class="no-padding">
             <video id="video" type="video/mp4" controls playsinline></video>
         </div>
@@ -137,10 +143,10 @@
 	</div>
 
     <!-- SCRIPTS -->
-    <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="js/jqm_defaults.js"></script>
-    <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1jaA52jylkWFKKG7j-W03wtp-rh9i20Y" async defer></script>
-    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/jquery-2.2.4.min.js"></script> <!-- Jquery is required for JQM -->
+    <script type="text/javascript" src="js/jqm_defaults.js"></script>   <!-- JQM Default settings for app -->
+    <script type="text/javascript" src="js/jquery.mobile-1.4.5.min.js"></script> <!-- Latest JQM -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1jaA52jylkWFKKG7j-W03wtp-rh9i20Y" async defer></script> <!-- Google Maps & Geocoding API -->
+    <script type="text/javascript" src="js/main.js"></script> <!-- My custom JS -->
 </body>
 </html>
