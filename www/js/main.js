@@ -34,7 +34,6 @@ document.addEventListener('deviceready', function () {
     initNav();
     initCameraPreview();
     initCameraButtons();
-
     $(document).on('pagebeforeshow', '#camera', initCameraPreview);
 }, false);
 
@@ -263,6 +262,7 @@ $(document).on('pageinit', '#maps', function() {
 
     initMapButtons();
     initTutorial();
+    initOfflinePage();
 
     navigator.geolocation.getCurrentPosition(locationSuccess, locationFailure, {
         enableHighAccuracy: true,
@@ -336,6 +336,16 @@ function initTutorial() {
         if(localStorage) {
             localStorage.setItem('Tutorial', "false");
         }
+    });
+}
+
+function initOfflinePage() {
+    $(document).on("offline", function() {
+        $('#offline-notice').fadeIn('fast');
+    });
+
+    $(document).on("online", function() {
+        $('#offline-notice').fadeOut('fast');
     });
 }
 

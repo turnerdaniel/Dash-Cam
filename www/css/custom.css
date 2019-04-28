@@ -301,7 +301,7 @@ html body #camera {
     z-index: 2; 
 }
 
-#outer-wrapper {
+.outer-wrapper {
     height: 95%;
     display: flex;
     flex-direction: row;
@@ -310,7 +310,7 @@ html body #camera {
     margin: auto 0;
 }
 
-#inner-wrapper {
+.inner-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -342,6 +342,27 @@ html body #camera {
 #tutorial #tutorial-okay:focus {
     -webkit-box-shadow: none;
     box-shadow: none;
+}
+
+#offline-notice {
+    position: fixed; 
+    display: none; /* Hide by default */
+    width: 100%; 
+    height: 100%; 
+    top: 0; 
+    left: 0;
+    background-color: #48626d;
+    z-index: 3; 
+}
+
+#offline-notice img {
+    height: 6em;
+    width: auto;
+}
+
+#offline-notice p {
+    text-align: center;
+    font-size: 4vw;
 }
 
 /* --- Files Page --- */
