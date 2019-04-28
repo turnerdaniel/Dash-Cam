@@ -172,8 +172,6 @@ $(document).on('pageinit', '#camera', function() {
                     size: videoData[i].size,
                     type: videoData[i].type
                 }
-                alert(video.fullPath);
-                alert(video.type);
                 mediaFiles.push(video);
             }
 
