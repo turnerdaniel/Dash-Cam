@@ -19,8 +19,6 @@ var allowRun = true;
 var shareOptions;
 
 //TODO:
-//offline screen
-//Change POI icons
 //Refactoring & commenting
 
 //--- @ end
@@ -35,6 +33,7 @@ document.addEventListener('deviceready', function () {
     initCameraPreview();
     initCameraButtons();
     $(document).on('pagebeforeshow', '#camera', initCameraPreview);
+    initOfflinePage();
 }, false);
 
 $(document).ready(function () {
@@ -42,6 +41,7 @@ $(document).ready(function () {
 
     initNav();
     initCameraButtons();
+    initOfflinePage();
 });
 
 function initNav() {
@@ -262,7 +262,6 @@ $(document).on('pageinit', '#maps', function() {
 
     initMapButtons();
     initTutorial();
-    initOfflinePage();
 
     navigator.geolocation.getCurrentPosition(locationSuccess, locationFailure, {
         enableHighAccuracy: true,
@@ -340,11 +339,11 @@ function initTutorial() {
 }
 
 function initOfflinePage() {
-    $(document).on("offline", function() {
+    $(document).on('offline', function() {
         $('#offline-notice').fadeIn('fast');
     });
 
-    $(document).on("online", function() {
+    $(document).on('online', function() {
         $('#offline-notice').fadeOut('fast');
     });
 }
