@@ -26,9 +26,7 @@ The build files for Android and iOS are generated from HTML, CSS and JS using th
 
 Therefore, you can provide PhoneGap Build with a compressed (zipped) www directory that contains `config.xml` to build the application yourself. You will need the necessary signing certificates for the desired platform. 
 
-*** Alternatively, the Android APK can be downloaded from the latest [release]() for sideloading. ***
-
-The iOS IPA file is not available since the the device's UUID needs to be added to the certificate provisions. 
+*__WARNING:__ This project is no longer maintained. Therefore it may require adjustments to `config.xml` to build correctly on newer OS versions.*
 ## Features
 
 The Application makes use of [jQuery Mobile](https://jquerymobile.com/) to provide a responsive interface that is optimised for mobile devices. 
@@ -42,6 +40,9 @@ Dash Cam provides:
 * Map View – view, add and remove markers on a map to indicate hazardous locations you wish to avoid.
 * Notifications – alerts you when entering a hazardous location so that you can be more aware of potential hazards.
 
+![Feature Screenshots](https://user-images.githubusercontent.com/35703802/67806494-e707f500-fa8a-11e9-83c5-4f75eecc6840.png "Screenshots of Dash Cam's core functionality")
+
+*From left to right, the image shows the: camera page, maps page, offline alert, files page, file viewer, share menu, info page and the automated text alert system.*
 ## Author
 
 Daniel Turner - [turnerdaniel](https://github.com/turnerdaniel/)
