@@ -9,7 +9,7 @@ The API key has been removed from this repository to avoid API key abuse.
 
 However, you can use your own key by visting the [Google Developer Console](https://console.developers.google.com/) and generating credentials for the Maps Javascript API and Geocoding API.
 
-This is inserted into Google Maps javascript tag at the bottom of```index.html``` to enable all of the apps features:
+This is inserted into Google Maps javascript tag at the bottom of```index.html``` to enable all of the app's features:
 
 ```html
 ...
@@ -19,14 +19,14 @@ This is inserted into Google Maps javascript tag at the bottom of```index.html``
 </body>
 ```
 
-You can run the applicaation without the API key. However, some critical features may not work. 
+You can run the application without the API key. However, some critical features may not work. 
 ## Installation
 
 The build files for Android and iOS are generated from HTML, CSS and JS using the [PhoneGap Build](https://build.phonegap.com/) service. 
 
-Therefore, you can provide PhoneGap Build with a compressed (zipped) www directory that contains ```config.xml``` to build the application yourself. You will need the necessary signing certificates for the desired platform. 
+Therefore, you can provide PhoneGap Build with a compressed (zipped) www directory that contains `config.xml` to build the application yourself. You will need the necessary signing certificates for the desired platform. 
 
-Alternatively, the Android APK can be downloaded from the latest [release]() for sideloading. NEED UPDATE URL
+*** Alternatively, the Android APK can be downloaded from the latest [release]() for sideloading. ***
 
 The iOS IPA file is not available since the the device's UUID needs to be added to the certificate provisions. 
 ## Features
